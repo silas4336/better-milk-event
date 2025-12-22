@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鮮乳坊莊園品鑑同樂會</title>
+    <!-- 獨特字體：Playfair Display 優雅標題 + Zen Maru Gothic 圓潤日系中文 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            // 鮮乳坊官方品牌色
+                            dark: '#2D2926',    // 深棕色
+                            primary: '#F3A69D', // 官方品牌粉色 - 主色調
+                            light: '#FBDACC',   // 官方品牌淺粉色 - 輔助色
+                            pale: '#FFF5F2',    // 極淺粉色背景
+                            cream: '#FFFFFF',   // 白色
+                            gold: '#C9A962',    // 金色（用於頂級獎勵）
+                            mint: '#B8D4CE'     // 薄荷綠點綴
+                        }
+                    },
+                    fontFamily: {
+                        display: ['Playfair Display', 'serif'],
+                        sans: ['Zen Maru Gothic', 'Noto Sans TC', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* ===== 基礎樣式 ===== */
+        body { 
+            background: linear-gradient(180deg, #FFF8F6 0%, #FFFDFB 50%, #FFF8F6 100%);
+            color: #2D2926;
+            min-height: 100vh;
+        }
+        
+        /* 背景裝飾圖案 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(243, 166, 157, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(251, 218, 204, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(243, 166, 157, 0.04) 0%, transparent 40%);
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        /* ===== 漸層背景 ===== */
+        .bg-primary-gradient { 
+            background: linear-gradient(135deg, #F3A69D 0%, #FBDACC 50%, #F3A69D 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 8s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        /* ===== 卡片樣式 ===== */
+        .card { 
+            background: linear-gradient(145deg, #FFFFFF 0%, #FFF5F2 100%);
+            border-radius: 1.25rem; 
+            box-shadow: 
+                0 4px 20px rgba(243, 166, 157, 0.15),
+                0 1px 3px rgba(0, 0, 0, 0.04);
+            padding: 1.75rem; 
+            border: 1px solid rgba(251, 218, 204, 0.6);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .card:hover {
+            box-shadow: 
+                0 12px 40px rgba(243, 166, 157, 0.25),
+                0 4px 12px rgba(0, 0, 0, 0.06);
+            transform: translateY(-4px);
+        }
+        
+        /* ===== 滾動條 ===== */
+        .scrollbar-thin::-webkit-scrollbar { height: 6px; }
+        .scrollbar-thin::-webkit-scrollbar-track { background: #FFF5F2; border-radius: 3px; }
+        .scrollbar-thin::-webkit-scrollbar-thumb { 
+            background: linear-gradient(90deg, #F3A69D, #FBDACC);
+            border-radius: 3px; 
+        }
+        .scrollbar-thin::-webkit-scrollbar-thumb:hover { background: #F3A69D; }
+        
+        /* ===== 表格樣式 ===== */
+        .sticky-shadow { box-shadow: 4px 0 12px -4px rgba(243, 166, 157, 0.25); }
+        
+        /* ===== 動畫效果 ===== */
+        @keyframes pulse-glow {
+            0%, 100% { 
+                box-shadow: 0 0 15px rgba(201, 169, 98, 0.5), 0 0 30px rgba(201, 169, 98, 0.2); 
+                transform: scale(1); 
+            }
+            50% { 
+                box-shadow: 0 0 25px rgba(201, 169, 98, 0.7), 0 0 50px rgba(201, 169, 98, 0.3); 
+                transform: scale(1.08); 
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        
+        .milestone-marker { 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        }
+        .milestone-marker:hover { 
+            transform: translateY(-8px) scale(1.1); 
+        }
+        
+        /* ===== 緞帶標籤 ===== */
+        .ribbon {
+            position: absolute;
+            top: -12px;
+            right: -12px;
+            background: linear-gradient(135deg, #C9A962 0%, #E5C77D 50%, #C9A962 100%);
+            color: white;
+            padding: 6px 18px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(201, 169, 98, 0.4);
+            z-index: 10;
+            letter-spacing: 0.5px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 550px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 280px;
+        }
+        
+        @media (min-width: 1024px) {
+            .chart-container {
+                max-width: 600px;
+                height: 320px;
+            }
+        }
+
+        /* ===== 頁面切換動畫 ===== */
+        .view-section {
+            display: none;
+            animation: slideUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .view-section.active {
+            display: block;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* ===== 導航按鈕 ===== */
+        .nav-btn {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        .nav-btn:hover::before {
+            left: 100%;
+        }
+        
+        .nav-btn.active {
+            background: linear-gradient(135deg, #F3A69D 0%, #FBDACC 100%);
+            color: white;
+            box-shadow: 0 6px 20px rgba(243, 166, 157, 0.4);
+            transform: scale(1.02);
+        }
+        
+        /* ===== 文字顏色 ===== */
+        h1, h2, h3 { 
+            color: #F3A69D;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        h1 { letter-spacing: 0.02em; }
+        h2 { letter-spacing: 0.01em; }
+        
+        .text-brand-dark { color: #2D2926; }
+        
+        /* 粉色背景用深色文字 */
+        .bg-brand-pale { color: #2D2926; }
+        .bg-brand-light { color: #2D2926; }
+        .bg-brand-primary { color: #FFFFFF; }
+        .bg-brand-primary th, .bg-brand-primary td { color: #FFFFFF; }
+        
+        /* 白色背景用粉色文字 */
+        nav.bg-white { color: inherit; }
+        .bg-white:not(nav) { color: #F3A69D; }
+        .card { color: #F3A69D; }
+        .card.bg-brand-pale, .card.bg-brand-light { color: #2D2926; }
+        
+        /* ===== 裝飾性元素 ===== */
+        .decorative-dot {
+            width: 6px;
+            height: 6px;
+            background: #F3A69D;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        
+        /* 標題裝飾線 */
+        .title-line {
+            display: inline-block;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(90deg, #F3A69D, #FBDACC);
+            border-radius: 2px;
+            margin: 0 12px;
+            vertical-align: middle;
+        }
+        
+        /* 閃爍強調 */
+        .shimmer-text {
+            background: linear-gradient(90deg, #F3A69D 0%, #FBDACC 50%, #F3A69D 100%);
+            background-size: 200% auto;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            animation: shimmer 3s linear infinite;
+        }
+        
+        /* 浮動動畫 */
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        /* 玻璃擬態效果 */
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        /* 按鈕懸停效果 */
+        .btn-hover-lift {
+            transition: all 0.3s ease;
+        }
+        .btn-hover-lift:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(243, 166, 157, 0.35);
+        }
+        
+        /* 數字強調樣式 */
+        .number-highlight {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            background: linear-gradient(135deg, #F3A69D, #FBDACC);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+    </style>
+</head>
+<body class="font-sans text-brand-dark">
+    <div id="app" class="min-h-screen flex flex-col">
+        
+        <!-- Header -->
+        <header class="bg-primary-gradient text-white py-6 md:py-8 lg:py-10 text-center shadow-2xl relative overflow-hidden">
+            <!-- 裝飾性背景圖案 -->
+            <div class="absolute top-0 left-0 w-full h-full">
+                <div class="absolute top-10 left-10 w-32 h-32 rounded-full bg-white/5 blur-2xl"></div>
+                <div class="absolute bottom-10 right-10 w-48 h-48 rounded-full bg-white/5 blur-3xl"></div>
+                <div class="absolute top-1/2 left-1/4 w-24 h-24 rounded-full bg-white/3 blur-xl"></div>
+            </div>
+            <!-- 波浪底部 -->
+            <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
+                <svg class="relative block w-full h-8 md:h-10" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C57.1,118.92,156.63,69.08,321.39,56.44Z" fill="#FFF5F2"></path>
+                </svg>
+            </div>
+            <div class="relative z-10 cursor-pointer max-w-6xl mx-auto px-4" onclick="switchView('home')">
+                <!-- 電腦版：橫向佈局 -->
+                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-center lg:gap-12">
+                    <!-- 品牌 Logo -->
+                    <div class="mb-4 lg:mb-0">
+                        <img src="assets/logo-zh-en/combo-horizontal-1-white.png" alt="鮮乳坊 Better Milk" class="h-10 md:h-12 lg:h-14 mx-auto lg:mx-0 drop-shadow-lg">
+                    </div>
+                    <!-- 標題區塊 -->
+                    <div class="lg:text-left">
+                        <h1 class="font-display text-2xl md:text-3xl lg:text-4xl font-bold mb-2 leading-tight tracking-wide text-white">
+                            <span class="inline-block float-animation">🥛</span>
+                            <span class="mx-2">莊園品鑑同樂會</span>
+                            <span class="inline-block float-animation" style="animation-delay: 0.5s;">✨</span>
+                        </h1>
+                        <p class="text-sm md:text-base opacity-95 font-light tracking-wide">
+                            蒐集牧草，晉升頂級品鑑家
+                        </p>
+                    </div>
+                    <!-- 活動期間標籤 -->
+                    <div class="mt-4 lg:mt-0">
+                        <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-1.5">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                            <span class="text-xs md:text-sm font-medium">2025/01/01 – 2025/02/28</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="bg-white/95 backdrop-blur-lg shadow-lg sticky top-0 z-50 border-b border-brand-light/30">
+            <div class="max-w-7xl mx-auto px-4 lg:px-8">
+                <div class="flex items-center justify-between py-2 lg:py-3">
+                    <!-- Logo 在左側 -->
+                    <div class="flex-shrink-0 cursor-pointer" onclick="switchView('home')">
+                        <img src="assets/logo-zh/logo-horizontal.png" alt="鮮乳坊" class="h-7 md:h-8 lg:h-9">
+                    </div>
+                    <!-- 導航按鈕 -->
+                    <div class="flex space-x-1 md:space-x-2 lg:space-x-4 overflow-x-auto">
+                        <button onclick="switchView('home')" id="nav-home" class="nav-btn px-3 md:px-4 lg:px-5 py-1.5 lg:py-2 rounded-full text-xs md:text-sm font-bold text-gray-600 hover:text-brand-primary hover:bg-brand-pale whitespace-nowrap active">
+                            <span class="mr-1">🏠</span><span class="hidden sm:inline">首頁</span>
+                        </button>
+                        <button onclick="switchView('rules')" id="nav-rules" class="nav-btn px-3 md:px-4 lg:px-5 py-1.5 lg:py-2 rounded-full text-xs md:text-sm font-bold text-gray-600 hover:text-brand-primary hover:bg-brand-pale whitespace-nowrap">
+                            <span class="mr-1">📜</span><span class="hidden sm:inline">活動辦法</span>
+                        </button>
+                        <button onclick="switchView('stores')" id="nav-stores" class="nav-btn px-3 md:px-4 lg:px-5 py-1.5 lg:py-2 rounded-full text-xs md:text-sm font-bold text-gray-600 hover:text-brand-primary hover:bg-brand-pale whitespace-nowrap">
+                            <span class="mr-1">📍</span><span class="hidden sm:inline">銷售據點</span>
+                        </button>
+                        <button onclick="switchView('rewards')" id="nav-rewards" class="nav-btn px-3 md:px-4 lg:px-5 py-1.5 lg:py-2 rounded-full text-xs md:text-sm font-bold text-gray-600 hover:text-brand-primary hover:bg-brand-pale whitespace-nowrap">
+                            <span class="mr-1">🎁</span><span class="hidden sm:inline">獎勵升級</span>
+                        </button>
+                        <button onclick="switchView('redeem')" id="nav-redeem" class="nav-btn px-3 md:px-4 lg:px-5 py-1.5 lg:py-2 rounded-full text-xs md:text-sm font-bold text-brand-gold hover:text-white hover:bg-brand-gold whitespace-nowrap border border-brand-gold">
+                            <span class="mr-1">🎫</span><span class="hidden sm:inline">兌換中心</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <main class="max-w-7xl mx-auto p-4 md:p-6 lg:p-8 flex-grow relative min-h-[500px]">
+
+            <!-- HOME VIEW -->
+            <div id="home-view" class="view-section active">
+                <!-- 活動精神區塊 -->
+                <section class="mb-10 lg:mb-12">
+                    <div class="bg-white rounded-2xl lg:rounded-3xl p-6 md:p-8 lg:p-10 shadow-xl border border-brand-light/30 flex flex-col lg:flex-row items-center relative overflow-hidden">
+                        <!-- 裝飾性背景 -->
+                        <div class="absolute right-0 top-0 h-full w-2/5 bg-gradient-to-l from-brand-pale to-transparent z-0"></div>
+                        <div class="absolute -right-20 -top-20 w-64 h-64 rounded-full bg-brand-light/20 blur-3xl"></div>
+                        <div class="absolute -left-10 -bottom-10 w-40 h-40 rounded-full bg-brand-mint/10 blur-2xl"></div>
+                        
+                        <!-- 左側裝飾條 -->
+                        <div class="absolute left-0 top-0 h-full w-1 lg:w-1.5 bg-gradient-to-b from-brand-primary via-brand-gold to-brand-mint rounded-l-2xl lg:rounded-l-3xl"></div>
+                        
+                        <div class="lg:w-3/4 relative z-10 pl-4 lg:pl-6">
+                            <div class="flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4">
+                                <span class="decorative-dot"></span>
+                                <span class="text-xs lg:text-sm font-bold text-brand-primary uppercase tracking-widest">活動核心精神</span>
+                                <span class="decorative-dot"></span>
+                            </div>
+                            <h2 class="font-display text-xl md:text-2xl lg:text-3xl font-bold text-brand-primary mb-3 lg:mb-4 leading-snug">
+                                品鑑，讓鮮乳不再只是鮮乳
+                            </h2>
+                            <p class="text-sm md:text-base lg:text-lg text-gray-700 leading-relaxed">
+                                鮮乳坊邀請您加入一場跨越牧場的頂級風味探索。<br class="hidden lg:block">
+                                從單純飲用到懂得鑑賞，用專業和用心，<br class="hidden lg:block">
+                                <span class="font-bold text-brand-primary">解鎖每一滴鮮乳背後的莊園級價值。</span>
+                            </p>
+                        </div>
+                        <div class="lg:w-1/4 mt-6 lg:mt-0 flex justify-center relative z-10">
+                            <div class="relative">
+                                <div class="text-6xl lg:text-7xl drop-shadow-lg float-animation">🥛</div>
+                                <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-12 lg:w-16 h-2 lg:h-3 bg-brand-light/40 rounded-full blur-sm"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 快速導航區塊 -->
+                <section class="mb-10 lg:mb-12">
+                    <div class="text-center mb-6 lg:mb-8">
+                        <h2 class="font-display text-2xl md:text-3xl lg:text-4xl font-bold text-brand-primary mb-2">
+                            開始您的品鑑之旅
+                        </h2>
+                        <p class="text-sm lg:text-base text-gray-500">選擇以下區塊，探索更多活動內容</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6">
+                        <!-- 活動辦法卡片 -->
+                        <div onclick="switchView('rules')" class="card h-full border-2 border-transparent hover:border-brand-primary cursor-pointer group bg-gradient-to-br from-white to-brand-pale/30 p-5 lg:p-6">
+                            <div class="relative mb-4 lg:mb-5">
+                                <div class="w-12 h-12 lg:w-14 lg:h-14 mx-auto bg-gradient-to-br from-brand-light to-brand-pale rounded-xl lg:rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-lg">
+                                    <span class="text-2xl lg:text-3xl">📜</span>
+                                </div>
+                                <div class="absolute -top-1 -right-1 w-16 h-16 mx-auto bg-brand-primary/5 rounded-full blur-xl group-hover:bg-brand-primary/10 transition-all"></div>
+                            </div>
+                            <h3 class="font-display text-lg lg:text-xl font-bold text-center text-brand-primary mb-2">活動辦法</h3>
+                            <p class="text-xs lg:text-sm text-center text-gray-500 mb-3 leading-relaxed">了解如何蒐集牧草、消費門檻與發票登錄流程</p>
+                            <div class="text-center">
+                                <span class="inline-flex items-center gap-1.5 text-brand-primary font-bold text-xs lg:text-sm group-hover:gap-2.5 transition-all">
+                                    前往查看 
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <!-- 銷售據點卡片 -->
+                        <div onclick="switchView('stores')" class="card h-full border-2 border-transparent hover:border-brand-primary cursor-pointer group bg-gradient-to-br from-white to-brand-mint/10 p-5 lg:p-6">
+                            <div class="relative mb-4 lg:mb-5">
+                                <div class="w-12 h-12 lg:w-14 lg:h-14 mx-auto bg-gradient-to-br from-brand-mint/50 to-brand-mint/20 rounded-xl lg:rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:-rotate-3 transition-all duration-500 shadow-lg">
+                                    <span class="text-2xl lg:text-3xl">📍</span>
+                                </div>
+                                <div class="absolute -top-1 -right-1 w-16 h-16 mx-auto bg-brand-mint/5 rounded-full blur-xl group-hover:bg-brand-mint/15 transition-all"></div>
+                            </div>
+                            <h3 class="font-display text-lg lg:text-xl font-bold text-center text-brand-primary mb-2">銷售據點</h3>
+                            <p class="text-xs lg:text-sm text-center text-gray-500 mb-3 leading-relaxed">快速搜尋全台販售通路，找到離您最近的鮮乳坊</p>
+                            <div class="text-center">
+                                <span class="inline-flex items-center gap-1.5 text-brand-primary font-bold text-xs lg:text-sm group-hover:gap-2.5 transition-all">
+                                    立即搜尋 
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <!-- 獎勵升級卡片 -->
+                        <div onclick="switchView('rewards')" class="card h-full border-2 border-transparent hover:border-brand-gold cursor-pointer group bg-gradient-to-br from-white to-brand-gold/10 p-5 lg:p-6">
+                            <div class="relative mb-4 lg:mb-5">
+                                <div class="w-12 h-12 lg:w-14 lg:h-14 mx-auto bg-gradient-to-br from-brand-gold/40 to-brand-gold/20 rounded-xl lg:rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-lg">
+                                    <span class="text-2xl lg:text-3xl">🎁</span>
+                                </div>
+                                <div class="absolute -top-1 -right-1 w-16 h-16 mx-auto bg-brand-gold/5 rounded-full blur-xl group-hover:bg-brand-gold/15 transition-all"></div>
+                            </div>
+                            <h3 class="font-display text-lg lg:text-xl font-bold text-center text-brand-primary mb-2">獎勵升級</h3>
+                            <p class="text-xs lg:text-sm text-center text-gray-500 mb-3 leading-relaxed">查看各等級回饋好禮，解鎖專屬莊園體驗</p>
+                            <div class="text-center">
+                                <span class="inline-flex items-center gap-1.5 text-brand-gold font-bold text-xs lg:text-sm group-hover:gap-2.5 transition-all">
+                                    查看好禮 
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- RULES VIEW -->
+            <div id="rules-view" class="view-section">
+                <section class="mb-8 lg:mb-10">
+                    <h2 class="text-2xl lg:text-3xl font-bold text-brand-primary mb-4 lg:mb-6 text-center">🌟 輕鬆入門頂級品鑑</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6">
+                        <div class="card border-t-4 border-brand-primary text-center bg-brand-pale">
+                            <h3 class="text-lg font-bold text-gray-800 mb-1">消費門檻</h3>
+                            <p class="text-gray-800 font-bold mb-2">於指定通路購買鮮乳坊產品</p>
+                            <div class="bg-white p-4 rounded-xl shadow-sm border border-brand-light">
+                                <p class="text-sm text-gray-500">單筆發票滿</p>
+                                <p class="text-4xl font-extrabold text-brand-primary">$99 <span class="text-sm font-medium">元 (含) 以上</span></p>
+                            </div>
+                        </div>
+                        <div class="card border-t-4 border-brand-light text-center bg-brand-pale">
+                            <h3 class="text-lg font-bold text-gray-800 mb-1">點數獲取</h3>
+                            <p class="text-gray-800 font-bold mb-2">每筆合格發票</p>
+                            <div class="bg-white p-4 rounded-xl shadow-sm border border-brand-light">
+                                <p class="text-sm text-gray-500">即可獲得</p>
+                                <p class="text-4xl font-extrabold text-brand-primary">1 <span class="text-sm font-medium">份牧草</span></p>
+                            </div>
+                        </div>
+                        <div class="card border-t-4 border-brand-primary text-center relative bg-brand-pale">
+                             <div class="absolute -top-3 -right-3 bg-red-500 text-white text-xs px-3 py-1 rounded-full shadow-lg font-bold animate-bounce">關鍵規則</div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-1">品鑑挑戰</h3>
+                            <p class="text-gray-800 font-bold mb-2 text-sm">單一牧場/聯名商品限 1 份</p>
+                            <div class="bg-white p-4 rounded-xl shadow-sm border border-brand-light">
+                                <p class="text-sm text-gray-500">本期最高累積</p>
+                                <p class="text-4xl font-extrabold text-brand-primary">16 <span class="text-sm font-medium">份</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="mb-8 lg:mb-10">
+                    <h2 class="text-2xl lg:text-3xl font-bold text-brand-primary mb-4 lg:mb-6 text-center">🔍 登錄流程：一鍵完成，牧草入袋</h2>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+                        <div class="bg-white rounded-2xl p-6 shadow-md relative border border-brand-light">
+                            <div class="absolute top-4 right-4 w-12 h-12 bg-brand-light rounded-full flex items-center justify-center text-2xl">🏪</div>
+                            <h3 class="text-xl font-bold mb-4 text-brand-primary">實體通路</h3>
+                            <p class="text-sm text-gray-500 mb-4 font-medium">便利商店 / 量販店 / 超市</p>
+                            <ol class="list-decimal list-inside space-y-3 text-gray-800 font-medium">
+                                <li class="p-2 rounded bg-brand-pale">購買鮮乳坊指定產品 (滿$99)</li>
+                                <li class="p-2 rounded bg-brand-light/50 text-brand-primary font-bold">掃描傳單 QR Code 進入 LINE 官方帳號</li>
+                                <li class="p-2 rounded bg-brand-pale">上傳符合資格之發票照片</li>
+                            </ol>
+                        </div>
+                        <div class="bg-white rounded-2xl p-6 shadow-md relative border border-brand-light">
+                             <div class="absolute top-4 right-4 w-12 h-12 bg-brand-light rounded-full flex items-center justify-center text-2xl">🌐</div>
+                            <h3 class="text-xl font-bold mb-4 text-brand-primary">官網通路</h3>
+                            <p class="text-sm text-gray-500 mb-4 font-medium">鮮乳坊官方網站</p>
+                            <div class="flex items-center justify-center h-32 bg-brand-pale rounded-xl text-brand-primary font-bold text-lg border-2 border-dashed border-brand-primary">
+                                <div class="text-center">
+                                    系統於訂單完成後<br>自動發放 ✅
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 text-center">
+                        <p class="text-sm text-red-600 bg-red-50 inline-block px-6 py-3 rounded-full font-bold shadow-sm border border-red-100">⚠️ 注意：消費後請務必主動登錄發票，以確保您的牧草順利累積。</p>
+                    </div>
+                </section>
+                
+                <div class="text-center mt-8">
+                    <button onclick="switchView('home')" class="text-brand-primary font-bold underline hover:text-brand-dark">返回首頁</button>
+                </div>
+            </div>
+
+            <!-- STORES VIEW -->
+            <div id="stores-view" class="view-section">
+                <section class="mb-8 lg:mb-10">
+                    <div class="text-center mb-4 lg:mb-6">
+                        <h2 class="text-2xl lg:text-3xl font-bold text-brand-primary mb-2">📍 全台銷售據點與產品一覽</h2>
+                        <p class="text-sm lg:text-base text-gray-600 font-medium">查詢離您最近的通路，開啟您的品鑑之旅</p>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-lg border border-brand-light/50 overflow-hidden flex flex-col">
+                        <div class="p-4 bg-brand-pale border-b border-brand-light flex flex-col md:flex-row justify-between items-center gap-4">
+                            <div class="text-gray-800 font-bold flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-primary"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/><path d="M22 7v3a2 2 0 0 1-2 2v0a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12v0a2 2 0 0 1-2-2V7"/></svg>
+                                通路快速查詢
+                            </div>
+                            <div class="relative w-full md:w-72">
+                                <input type="text" id="storeSearchInput" placeholder="輸入通路名稱 (例: 全聯)..." 
+                                    class="pl-10 pr-4 py-2.5 w-full border border-brand-primary/30 rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-brand-primary outline-none text-sm transition-all shadow-sm bg-white">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-brand-primary">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto relative scrollbar-thin">
+                            <table class="w-full text-sm text-left border-collapse" id="distributionTable">
+                                <thead class="text-xs text-white bg-gradient-to-r from-brand-primary to-brand-light uppercase">
+                                    <tr>
+                                        <th scope="col" class="sticky left-0 z-20 bg-brand-primary px-4 py-4 font-bold min-w-[140px] sticky-shadow border-r border-white/20">
+                                            通路名稱
+                                        </th>
+                                        <!-- Product Headers via JS -->
+                                    </tr>
+                                </thead>
+                                <tbody id="distributionTableBody" class="text-gray-800">
+                                    <!-- Rows via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="bg-brand-pale p-2 text-right text-xs text-gray-800 font-medium">
+                            * 資料更新時間：2023 Q4 • 左右滑動查看更多商品
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- REWARDS VIEW -->
+            <div id="rewards-view" class="view-section">
+                <section class="mb-8 lg:mb-10">
+                    <h2 class="text-2xl lg:text-3xl font-bold text-brand-primary mb-4 lg:mb-6 text-center">🎯 您的品鑑升級之路</h2>
+                    <div class="bg-white rounded-xl lg:rounded-2xl p-4 md:p-6 lg:p-8 shadow-md border border-brand-light">
+                        <div class="relative pt-6 pb-12">
+                            <div class="h-4 bg-gray-200 rounded-full w-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-brand-light to-brand-primary w-full origin-left animate-[grow_2s_ease-out]"></div>
+                            </div>
+                            <div class="absolute top-0 left-0 w-full h-full flex justify-between items-center pointer-events-none">
+                                <div class="flex flex-col items-center transform -translate-y-2">
+                                    <div class="w-8 h-8 rounded-full bg-brand-primary text-white flex items-center justify-center font-bold text-sm z-10 ring-4 ring-white">0</div>
+                                    <div class="mt-4 text-xs font-bold text-gray-400">起點</div>
+                                </div>
+                                <div class="absolute left-[18.75%] flex flex-col items-center transform -translate-x-1/2 -translate-y-2 milestone-marker pointer-events-auto cursor-pointer">
+                                    <div class="w-10 h-10 rounded-full bg-white border-4 border-brand-light text-brand-primary flex items-center justify-center font-bold text-sm z-10 shadow-md">3</div>
+                                    <div class="mt-4 text-xs font-bold text-brand-primary text-center">初級<br>品鑑家</div>
+                                </div>
+                                <div class="absolute left-[43.75%] flex flex-col items-center transform -translate-x-1/2 -translate-y-2 milestone-marker pointer-events-auto cursor-pointer">
+                                    <div class="w-10 h-10 rounded-full bg-white border-4 border-brand-light text-brand-primary flex items-center justify-center font-bold text-sm z-10 shadow-md">7</div>
+                                    <div class="mt-4 text-xs font-bold text-brand-primary text-center">進階<br>品鑑家</div>
+                                </div>
+                                <div class="absolute left-[75%] flex flex-col items-center transform -translate-x-1/2 -translate-y-2 milestone-marker pointer-events-auto cursor-pointer">
+                                    <div class="w-10 h-10 rounded-full bg-white border-4 border-brand-primary text-brand-primary flex items-center justify-center font-bold text-sm z-10 shadow-md">12</div>
+                                    <div class="mt-4 text-xs font-bold text-brand-primary text-center">莊園<br>探索家</div>
+                                </div>
+                                <div class="absolute right-0 flex flex-col items-center transform translate-x-2 -translate-y-2 milestone-marker pointer-events-auto cursor-pointer">
+                                    <div class="w-12 h-12 rounded-full bg-yellow-400 text-white flex items-center justify-center font-bold text-lg z-10 shadow-lg ring-4 ring-white" style="animation: pulse-glow 2s infinite;">16</div>
+                                    <div class="mt-3 text-sm font-bold text-yellow-600 text-center">頂級<br>大使</div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-center text-sm text-gray-500 mt-2">👇 完成任務，解鎖下方對應好禮 👇</p>
+                    </div>
+                </section>
+
+                <section class="mb-8 lg:mb-10">
+                    <h2 class="text-2xl lg:text-3xl font-bold text-brand-primary mb-4 lg:mb-6 text-center">🎁 莊園好禮兌換</h2>
+                    <p class="text-center text-sm lg:text-base text-gray-800 mb-4 lg:mb-6 max-w-2xl mx-auto font-medium">隨著品鑑等級提升，不僅鮮奶金加倍，更能解鎖獨家體驗與實體好禮！</p>
+                    <div class="space-y-3 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-3 lg:gap-4">
+                        <div class="card border-brand-light hover:shadow-lg transition flex flex-col justify-between bg-white">
+                            <div>
+                                <div class="text-center mb-4">
+                                    <span class="bg-brand-pale text-brand-primary px-3 py-1 rounded-full text-xs font-bold">3 點</span>
+                                    <h3 class="text-lg font-bold mt-2 text-brand-primary">初級品鑑家</h3>
+                                </div>
+                                <ul class="text-sm text-gray-800 space-y-2 mb-4 font-medium">
+                                    <li class="flex items-start"><span class="mr-2 text-brand-primary">●</span> 鮮奶金 100</li>
+                                </ul>
+                            </div>
+                            <div class="text-xs text-gray-500 border-t border-brand-light/20 pt-3 mt-2">
+                                鼓勵加入會員、首次多樣化品鑑。
+                            </div>
+                        </div>
+                        <div class="card border-brand-light hover:shadow-lg transition flex flex-col justify-between bg-brand-pale">
+                            <div>
+                                <div class="text-center mb-4">
+                                    <span class="bg-brand-light text-brand-primary px-3 py-1 rounded-full text-xs font-bold shadow-sm">7 點</span>
+                                    <h3 class="text-lg font-bold mt-2 text-brand-primary">進階品鑑家</h3>
+                                </div>
+                                <ul class="text-sm text-gray-800 space-y-2 mb-4 font-medium">
+                                    <li class="flex items-start"><span class="mr-2 text-brand-primary">●</span> 鮮奶金 188</li>
+                                    <li class="flex items-start"><span class="mr-2 text-brand-primary">●</span> 全家 A2β酪蛋白鮮乳 200ml</li>
+                                </ul>
+                            </div>
+                            <div class="text-xs text-brand-primary/70 border-t border-brand-light pt-3 mt-2 font-medium">
+                                體驗高價值聯名產品，享受莊園級品味。
+                            </div>
+                        </div>
+                        <div class="card border-brand-primary hover:shadow-lg transition flex flex-col justify-between bg-brand-light/20">
+                            <div>
+                                <div class="text-center mb-4">
+                                    <span class="bg-brand-primary text-white px-3 py-1 rounded-full text-xs font-bold shadow-sm">12 點</span>
+                                    <h3 class="text-lg font-bold mt-2 text-brand-primary">莊園探索家</h3>
+                                </div>
+                                <ul class="text-sm text-gray-800 space-y-2 mb-4 font-medium">
+                                    <li class="flex items-start"><span class="mr-2 text-brand-primary">●</span> 鮮奶金 450</li>
+                                    <li class="flex items-start"><span class="mr-2 text-brand-primary">●</span> 獨家「好農動物福利」Line 貼圖</li>
+                                </ul>
+                            </div>
+                            <div class="text-xs text-brand-primary/70 border-t border-brand-primary/20 pt-3 mt-2 font-medium">
+                                強化「好農」理念，提供社群專屬虛擬資產。
+                            </div>
+                        </div>
+                        <div class="card border-2 border-yellow-400 hover:shadow-xl transition flex flex-col justify-between bg-white relative overflow-visible transform md:-translate-y-4 z-10">
+                            <div class="ribbon">🏆 TOP</div>
+                            <div>
+                                <div class="text-center mb-4">
+                                    <span class="bg-gradient-to-r from-yellow-400 to-yellow-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-md">16 點</span>
+                                    <h3 class="text-xl font-extrabold mt-2 text-brand-primary">頂級鑑賞大使</h3>
+                                    <p class="text-2xl font-black text-yellow-600 mt-2 border-b-2 border-yellow-100 pb-2">總價值 $4,486</p>
+                                </div>
+                                <ul class="text-sm text-gray-800 space-y-2 mb-4 font-bold">
+                                    <li class="flex items-start"><span class="mr-2 text-yellow-500">★</span> 鮮奶金 1688</li>
+                                    <li class="flex items-start"><span class="mr-2 text-yellow-500">★</span> 桂芳牧場活動體驗券兩張</li>
+                                </ul>
+                            </div>
+                            <div class="text-xs text-yellow-700 bg-yellow-50 p-3 rounded-lg mt-2 font-bold text-center border border-yellow-100">
+                                獨享最高額回饋，優先參與線下社群活動。
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="mb-8 lg:mb-10">
+                    <div class="card border-brand-primary/10 p-4 lg:p-6">
+                        <h3 class="text-lg lg:text-xl font-bold text-center mb-3 text-brand-primary">回饋價值</h3>
+                        <p class="text-center text-xs lg:text-sm text-gray-600 mb-4 font-medium">隨著等級提升，獎勵價值呈指數級成長！</p>
+                        <div class="chart-container">
+                            <canvas id="rewardChart"></canvas>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- REDEEM VIEW - 兌換中心 -->
+            <div id="redeem-view" class="view-section">
+                <!-- 用戶狀態卡片 -->
+                <section class="mb-8 lg:mb-10">
+                    <div class="bg-gradient-to-br from-brand-primary to-brand-light rounded-2xl lg:rounded-3xl p-6 lg:p-8 shadow-xl text-white relative overflow-hidden">
+                        <!-- 裝飾性背景 -->
+                        <div class="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full blur-3xl"></div>
+                        <div class="absolute bottom-0 left-0 w-32 h-32 bg-white/5 rounded-full blur-2xl"></div>
+                        
+                        <div class="relative z-10">
+                            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+                                <!-- 左側：用戶資訊 -->
+                                <div class="flex items-center gap-4">
+                                    <div class="w-16 h-16 lg:w-20 lg:h-20 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
+                                        <span class="text-3xl lg:text-4xl">🥛</span>
+                                    </div>
+                                    <div>
+                                        <p class="text-white/80 text-sm mb-1">您的品鑑等級</p>
+                                        <h2 class="text-xl lg:text-2xl font-bold" id="userLevel">尚未開始</h2>
+                                        <p class="text-white/70 text-sm mt-1">會員編號：<span id="memberIdDisplay">未登入</span></p>
+                                    </div>
+                                </div>
+                                
+                                <!-- 右側：牧草數量 -->
+                                <div class="bg-white/15 backdrop-blur-sm rounded-2xl p-4 lg:p-6 text-center">
+                                    <p class="text-white/80 text-sm mb-2">目前累積牧草</p>
+                                    <div class="flex items-baseline justify-center gap-2">
+                                        <span class="text-4xl lg:text-5xl font-black" id="grassCount">0</span>
+                                        <span class="text-lg">/ 16 份</span>
+                                    </div>
+                                    <div class="mt-3 w-full bg-white/20 rounded-full h-2 overflow-hidden">
+                                        <div class="h-full bg-white rounded-full transition-all duration-500" id="progressBar" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 輸入區塊 -->
+                            <div class="mt-6 pt-6 border-t border-white/20">
+                                <div class="flex flex-col sm:flex-row gap-4 items-center justify-center">
+                                    <div class="flex items-center gap-3">
+                                        <label class="text-white/90 text-sm font-medium">輸入您的牧草數量：</label>
+                                        <input type="number" id="grassInput" min="0" max="16" value="0" 
+                                            class="w-20 px-3 py-2 rounded-lg bg-white/20 border border-white/30 text-white text-center font-bold text-lg focus:outline-none focus:ring-2 focus:ring-white/50 placeholder-white/50"
+                                            onchange="updateGrassCount(this.value)">
+                                    </div>
+                                    <button onclick="updateGrassCount(document.getElementById('grassInput').value)" 
+                                        class="px-6 py-2 bg-white text-brand-primary font-bold rounded-full hover:bg-white/90 transition-all shadow-lg hover:shadow-xl">
+                                        更新進度
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 距離下一等級 -->
+                <section class="mb-8 lg:mb-10">
+                    <div class="bg-white rounded-xl lg:rounded-2xl p-5 lg:p-6 shadow-md border border-brand-light/50" id="nextLevelCard">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-brand-pale rounded-xl flex items-center justify-center">
+                                    <span class="text-2xl">🎯</span>
+                                </div>
+                                <div>
+                                    <p class="text-gray-500 text-sm">距離下一等級</p>
+                                    <p class="text-lg font-bold text-brand-primary" id="nextLevelText">還差 3 份即可升級為初級品鑑家</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-3xl font-black text-brand-primary" id="nextLevelCount">3</p>
+                                <p class="text-xs text-gray-500">份牧草</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 可兌換獎勵列表 -->
+                <section class="mb-8 lg:mb-10">
+                    <h2 class="text-xl lg:text-2xl font-bold text-brand-primary mb-4 lg:mb-6 flex items-center gap-2">
+                        <span>🎁</span> 獎勵兌換區
+                    </h2>
+                    
+                    <div class="space-y-4" id="rewardsList">
+                        <!-- 初級品鑑家 - 3點 -->
+                        <div class="reward-item bg-white rounded-xl lg:rounded-2xl p-4 lg:p-5 shadow-md border border-brand-light/50 flex flex-col sm:flex-row sm:items-center gap-4 transition-all" data-required="3">
+                            <div class="flex items-center gap-4 flex-grow">
+                                <div class="w-14 h-14 bg-brand-pale rounded-xl flex items-center justify-center flex-shrink-0">
+                                    <span class="text-2xl">🌱</span>
+                                </div>
+                                <div class="flex-grow">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="px-2 py-0.5 bg-brand-pale text-brand-primary rounded-full text-xs font-bold">3 點</span>
+                                        <h3 class="font-bold text-gray-800">初級品鑑家</h3>
+                                    </div>
+                                    <p class="text-sm text-gray-600">鮮奶金 100 點</p>
+                                </div>
+                            </div>
+                            <button class="redeem-btn px-5 py-2 rounded-full font-bold text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed bg-gray-200 text-gray-500" disabled data-reward="level1">
+                                未達門檻
+                            </button>
+                        </div>
+                        
+                        <!-- 進階品鑑家 - 7點 -->
+                        <div class="reward-item bg-white rounded-xl lg:rounded-2xl p-4 lg:p-5 shadow-md border border-brand-light/50 flex flex-col sm:flex-row sm:items-center gap-4 transition-all" data-required="7">
+                            <div class="flex items-center gap-4 flex-grow">
+                                <div class="w-14 h-14 bg-brand-light/50 rounded-xl flex items-center justify-center flex-shrink-0">
+                                    <span class="text-2xl">🌿</span>
+                                </div>
+                                <div class="flex-grow">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="px-2 py-0.5 bg-brand-light text-brand-primary rounded-full text-xs font-bold">7 點</span>
+                                        <h3 class="font-bold text-gray-800">進階品鑑家</h3>
+                                    </div>
+                                    <p class="text-sm text-gray-600">鮮奶金 188 點 + 全家 A2β酪蛋白鮮乳 200ml</p>
+                                </div>
+                            </div>
+                            <button class="redeem-btn px-5 py-2 rounded-full font-bold text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed bg-gray-200 text-gray-500" disabled data-reward="level2">
+                                未達門檻
+                            </button>
+                        </div>
+                        
+                        <!-- 莊園探索家 - 12點 -->
+                        <div class="reward-item bg-white rounded-xl lg:rounded-2xl p-4 lg:p-5 shadow-md border border-brand-light/50 flex flex-col sm:flex-row sm:items-center gap-4 transition-all" data-required="12">
+                            <div class="flex items-center gap-4 flex-grow">
+                                <div class="w-14 h-14 bg-brand-primary/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                                    <span class="text-2xl">🌳</span>
+                                </div>
+                                <div class="flex-grow">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="px-2 py-0.5 bg-brand-primary text-white rounded-full text-xs font-bold">12 點</span>
+                                        <h3 class="font-bold text-gray-800">莊園探索家</h3>
+                                    </div>
+                                    <p class="text-sm text-gray-600">鮮奶金 450 點 + 獨家「好農動物福利」Line 貼圖</p>
+                                </div>
+                            </div>
+                            <button class="redeem-btn px-5 py-2 rounded-full font-bold text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed bg-gray-200 text-gray-500" disabled data-reward="level3">
+                                未達門檻
+                            </button>
+                        </div>
+                        
+                        <!-- 頂級鑑賞大使 - 16點 -->
+                        <div class="reward-item bg-gradient-to-r from-yellow-50 to-white rounded-xl lg:rounded-2xl p-4 lg:p-5 shadow-md border-2 border-yellow-300 flex flex-col sm:flex-row sm:items-center gap-4 transition-all relative overflow-hidden" data-required="16">
+                            <div class="absolute top-0 right-0 bg-yellow-400 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">🏆 最高等級</div>
+                            <div class="flex items-center gap-4 flex-grow">
+                                <div class="w-14 h-14 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                                    <span class="text-2xl">👑</span>
+                                </div>
+                                <div class="flex-grow">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="px-2 py-0.5 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white rounded-full text-xs font-bold">16 點</span>
+                                        <h3 class="font-bold text-gray-800">頂級鑑賞大使</h3>
+                                    </div>
+                                    <p class="text-sm text-gray-600">鮮奶金 1688 點 + 桂芳牧場活動體驗券兩張</p>
+                                    <p class="text-xs text-yellow-600 font-bold mt-1">總價值 $4,486</p>
+                                </div>
+                            </div>
+                            <button class="redeem-btn px-5 py-2 rounded-full font-bold text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed bg-gray-200 text-gray-500" disabled data-reward="level4">
+                                未達門檻
+                            </button>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 兌換記錄 -->
+                <section class="mb-8 lg:mb-10">
+                    <h2 class="text-xl lg:text-2xl font-bold text-brand-primary mb-4 lg:mb-6 flex items-center gap-2">
+                        <span>📋</span> 兌換記錄
+                    </h2>
+                    <div class="bg-white rounded-xl lg:rounded-2xl p-5 lg:p-6 shadow-md border border-brand-light/50">
+                        <div id="redeemHistory" class="space-y-3">
+                            <div class="text-center py-8 text-gray-400">
+                                <span class="text-4xl mb-3 block">📭</span>
+                                <p class="text-sm">尚無兌換記錄</p>
+                                <p class="text-xs mt-1">達到等級門檻後即可兌換獎勵</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 注意事項 -->
+                <section class="mb-8 lg:mb-10">
+                    <div class="bg-brand-pale rounded-xl lg:rounded-2xl p-5 lg:p-6 border border-brand-light">
+                        <h3 class="font-bold text-gray-800 mb-3 flex items-center gap-2">
+                            <span>⚠️</span> 兌換注意事項
+                        </h3>
+                        <ul class="text-sm text-gray-600 space-y-2">
+                            <li class="flex items-start gap-2">
+                                <span class="text-brand-primary">•</span>
+                                <span>獎勵為累進制，達到各等級門檻後可分別兌換該等級獎勵</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-brand-primary">•</span>
+                                <span>鮮奶金將於兌換後 3-5 個工作日內發放至您的 LINE 官方帳號</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-brand-primary">•</span>
+                                <span>實體獎勵將以郵寄方式寄出，請確保收件資訊正確</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-brand-primary">•</span>
+                                <span>活動期間：2025/01/01 – 2025/02/28，請於期限內完成兌換</span>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+
+        </main>
+
+        <footer class="bg-primary-gradient text-white rounded-t-[2rem] lg:rounded-t-[3rem] p-8 lg:p-10 mt-10 lg:mt-12 relative overflow-hidden">
+            <!-- 裝飾性背景 -->
+            <div class="absolute top-0 left-0 w-full h-full">
+                <div class="absolute top-0 left-0 w-full h-full opacity-5" style="background-image: radial-gradient(#fff 1.5px, transparent 1.5px); background-size: 20px 20px;"></div>
+                <div class="absolute top-20 right-20 w-64 h-64 rounded-full bg-white/5 blur-3xl"></div>
+                <div class="absolute bottom-20 left-20 w-48 h-48 rounded-full bg-white/5 blur-2xl"></div>
+            </div>
+            
+            <div class="relative z-10 max-w-5xl mx-auto">
+                <!-- 電腦版：橫向佈局 -->
+                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8 lg:gap-12 mb-8">
+                    <!-- Logo 和標語 -->
+                    <div class="text-center lg:text-left">
+                        <img src="assets/logo-zh-en/basic-combo-white.png" alt="鮮乳坊 Better Milk" class="h-12 lg:h-14 mx-auto lg:mx-0 mb-4 drop-shadow-lg">
+                        <h3 class="font-display text-lg lg:text-xl font-bold mb-2 tracking-wide text-white">
+                            堅持好農品質，值得您放心品鑑
+                        </h3>
+                        <p class="text-white/80 font-medium tracking-wider text-sm">
+                            單一乳源 ・ 獸醫把關 ・ 優於國家標準
+                        </p>
+                    </div>
+                    
+                    <!-- QR Code 區塊 -->
+                    <div class="flex justify-center gap-6 lg:gap-8">
+                        <div class="flex flex-col items-center group">
+                            <div class="w-24 h-24 lg:w-28 lg:h-28 bg-white rounded-2xl mb-3 flex items-center justify-center p-2 overflow-hidden shadow-xl transition-all duration-500 group-hover:scale-105">
+                                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.bettermilk.com.tw/&color=F3A69D" alt="官網 QR Code" class="w-full h-full object-contain">
+                            </div>
+                            <p class="text-xs font-bold text-white/90">官方網站</p>
+                        </div>
+                        <div class="flex flex-col items-center group">
+                            <div class="w-24 h-24 lg:w-28 lg:h-28 bg-white rounded-2xl mb-3 flex items-center justify-center p-2 overflow-hidden shadow-xl transition-all duration-500 group-hover:scale-105">
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://page.line.me/bettermilk&color=06C755" alt="LINE 官方帳號 QR Code" class="w-full h-full object-contain">
+                            </div>
+                            <p class="text-xs font-bold text-white/90">LINE 官方帳號</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 版權資訊 -->
+                <div class="text-center text-xs lg:text-sm text-white/60 border-t border-white/15 pt-6">
+                    <p class="mb-1">&copy; 2025 鮮乳坊 Better Milk. All Rights Reserved.</p>
+                    <p class="text-xs text-white/40">詳細活動規則與鮮奶金使用效期，請以鮮乳坊 LINE 官方帳號公告為準。</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        // --- NAVIGATION LOGIC ---
+        function switchView(viewName) {
+            // Hide all views
+            const views = document.querySelectorAll('.view-section');
+            views.forEach(view => {
+                view.classList.remove('active');
+            });
+
+            // Show selected view
+            const selectedView = document.getElementById(viewName + '-view');
+            if (selectedView) {
+                selectedView.classList.add('active');
+                
+                // If switching to stores or rewards, make sure charts/tables are rendered
+                if (viewName === 'stores') {
+                    renderTable();
+                } else if (viewName === 'rewards') {
+                    // Slight delay to ensure canvas is visible for Chart.js
+                    setTimeout(initializeCharts, 100);
+                }
+            }
+
+            // Update Nav Buttons
+            const navBtns = document.querySelectorAll('.nav-btn');
+            navBtns.forEach(btn => {
+                btn.classList.remove('active', 'bg-brand-primary', 'text-white', 'shadow-md');
+                btn.classList.add('text-gray-500', 'hover:text-brand-primary', 'hover:bg-brand-light');
+            });
+            
+            const activeBtn = document.getElementById('nav-' + viewName);
+            if (activeBtn) {
+                activeBtn.classList.remove('text-gray-500', 'hover:text-brand-primary', 'hover:bg-brand-light');
+                activeBtn.classList.add('active');
+            }
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- DATA & LOGIC ---
+
+        // BRAND COLORS - 鮮乳坊官方品牌色
+        const PRIMARY_COLOR = '#F3A69D'; // 官方品牌粉色 - 主色調
+        const SECONDARY_COLOR = '#FBDACC'; // 官方品牌淺粉色 - 輔助色
+        const ACCENT_COLOR = '#C9A962'; // 金色（用於頂級獎勵）
+
+        // STORE DATA
+        const tableProducts = [
+            "豐樂鮮乳", "嘉明鮮乳", "桂芳鮮乳", "幸運兒鮮乳", "許慶良鮮乳", 
+            "A2β酪蛋白鮮乳", "豐樂鮮乳優格", "豐樂生乳優格", "豐樂吃吃優格", 
+            "原味保久乳", "巧克力保久乳", "鮮乳饅頭", "乳研所(機能保久乳)", 
+            "玻妞優格飲", "Wesweet甜點", "全家聯名商品"
+        ];
+
+        const tableChannels = [
+            { name: "全家便利商店", data: [0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1] },
+            { name: "全聯福利中心", data: [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0] },
+            { name: "家樂福", data:       [0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0] },
+            { name: "聖德科斯", data:     [1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0] },
+            { name: "主婦聯盟", data:     [1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0] },
+            { name: "寶雅", data:         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0] },
+            { name: "安永鮮物", data:     [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
+            { name: "健康食彩", data:     [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
+            { name: "Mia C'bon", data:    [0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0] },
+            { name: "Breeze Super", data: [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0] },
+            { name: "City Super", data:   [1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
+            { name: "元榆牧場", data:     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0] },
+            { name: "大苑子", data:       [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
+        ];
+
+        function renderTable(filterText = '') {
+            const theadRow = document.querySelector('#distributionTable thead tr');
+            const tbody = document.getElementById('distributionTableBody');
+            
+            // Avoid re-rendering headers if they exist
+            if (theadRow.children.length <= 1) {
+                tableProducts.forEach((productName, index) => {
+                    const th = document.createElement('th');
+                    th.className = "px-4 py-3 whitespace-nowrap min-w-[100px] text-center border-l border-white/20 leading-tight";
+                    th.innerHTML = `
+                        <div class="flex flex-col items-center justify-center gap-1">
+                            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-white/20 text-xs font-bold mb-1">${index + 1}</span>
+                            <span class="font-bold text-[13px]">${productName}</span>
+                        </div>`;
+                    theadRow.appendChild(th);
+                });
+            }
+
+            tbody.innerHTML = ''; 
+            
+            const filteredData = tableChannels.filter(c => c.name.includes(filterText));
+
+            if (filteredData.length === 0) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td colspan="${tableProducts.length + 1}" class="px-6 py-12 text-center text-brand-primary/60 bg-brand-pale/20">找不到符合「${filterText}」的通路</td>`;
+                tbody.appendChild(tr);
+                return;
+            }
+
+            filteredData.forEach((channel, idx) => {
+                const tr = document.createElement('tr');
+                const isEven = idx % 2 === 0;
+                tr.className = `border-b border-brand-light transition-colors hover:bg-brand-pale group ${isEven ? 'bg-white' : 'bg-brand-pale'}`;
+                
+                const th = document.createElement('th');
+                th.scope = "row";
+                th.className = `sticky left-0 z-10 px-4 py-4 font-bold text-gray-800 whitespace-nowrap sticky-shadow transition-colors border-r border-brand-light ${isEven ? 'bg-white group-hover:bg-brand-pale' : 'bg-brand-pale group-hover:bg-brand-pale'}`;
+                th.textContent = channel.name;
+                tr.appendChild(th);
+
+                channel.data.forEach(available => {
+                    const td = document.createElement('td');
+                    td.className = "px-4 py-3 text-center border-l border-brand-light/50";
+                    if (available === 1) {
+                        td.innerHTML = `
+                            <div class="flex justify-center items-center">
+                                <span class="inline-flex items-center justify-center w-6 h-6 bg-brand-primary text-white rounded-full shadow-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                                </span>
+                            </div>`;
+                    } else {
+                         td.innerHTML = `
+                            <div class="flex justify-center items-center">
+                                <span class="w-1.5 h-1.5 rounded-full bg-brand-light/50"></span>
+                            </div>`;
+                    }
+                    tr.appendChild(td);
+                });
+
+                tbody.appendChild(tr);
+            });
+        }
+
+        // CHART LOGIC
+        let chartInstance = null;
+
+        function initializeCharts() {
+            if (typeof Chart === 'undefined') return;
+
+            const ctx = document.getElementById('rewardChart');
+            if (!ctx) return; // Canvas might not be visible yet if on another tab
+
+            // Destroy existing chart to avoid duplicates
+            if (chartInstance) {
+                chartInstance.destroy();
+            }
+
+            Chart.defaults.color = '#333333';
+            Chart.defaults.font.family = "'Inter', 'Noto Sans TC', sans-serif";
+
+            chartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['初級 (3點)', '進階 (7點)', '探索 (12點)', '頂級大使 (16點)'],
+                    datasets: [
+                        {
+                            label: '鮮奶金 (元)',
+                            data: [100, 188, 450, 1688],
+                            backgroundColor: PRIMARY_COLOR, 
+                            hoverBackgroundColor: '#E8958C',
+                            stack: 'total',
+                            order: 2,
+                            borderRadius: 6
+                        },
+                        {
+                            label: '實體/體驗好禮價值 (元)',
+                            data: [0, 49, 33, 2798],
+                            backgroundColor: SECONDARY_COLOR, 
+                            hoverBackgroundColor: '#F3A69D',
+                            stack: 'total',
+                            order: 1,
+                            borderRadius: 6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    plugins: {
+                        legend: { 
+                            position: 'bottom', 
+                            labels: { 
+                                usePointStyle: true, 
+                                padding: 24,
+                                font: { family: "'Zen Maru Gothic', sans-serif", size: 12 }
+                            } 
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(243, 166, 157, 0.95)',
+                            titleFont: { size: 14, weight: 'bold', family: "'Zen Maru Gothic', sans-serif" },
+                            bodyFont: { family: "'Zen Maru Gothic', sans-serif" },
+                            padding: 14,
+                            cornerRadius: 10,
+                            callbacks: {
+                                footer: function(tooltipItems) {
+                                    let sum = 0;
+                                    tooltipItems.forEach(function(tooltipItem) {
+                                        sum += tooltipItem.parsed.y;
+                                    });
+                                    return '總價值: $' + sum;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: { 
+                            stacked: true, 
+                            grid: { display: false },
+                            ticks: { font: { family: "'Zen Maru Gothic', sans-serif" } }
+                        },
+                        y: { 
+                            stacked: true,
+                            grid: { color: '#FBDACC' },
+                            title: { 
+                                display: true, 
+                                text: '回饋總價值 (TWD)', 
+                                font: { weight: 'bold', family: "'Zen Maru Gothic', sans-serif" } 
+                            },
+                            type: 'logarithmic',
+                            min: 10,
+                            ticks: {
+                                font: { family: "'Zen Maru Gothic', sans-serif" },
+                                color: function(context) {
+                                    if (context.tick.value >= 4000) return ACCENT_COLOR; 
+                                    return '#2D2926';
+                                },
+                                callback: function(value, index, values) {
+                                    if (value === 10 || value === 100 || value === 1000 || value === 10000) {
+                                        return value;
+                                    }
+                                    return null;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // ===== 兌換中心功能 =====
+        
+        // 等級配置
+        const levelConfig = [
+            { points: 0, name: '尚未開始', icon: '🥛' },
+            { points: 3, name: '初級品鑑家', icon: '🌱' },
+            { points: 7, name: '進階品鑑家', icon: '🌿' },
+            { points: 12, name: '莊園探索家', icon: '🌳' },
+            { points: 16, name: '頂級鑑賞大使', icon: '👑' }
+        ];
+        
+        // 儲存兌換記錄
+        let redeemHistory = JSON.parse(localStorage.getItem('redeemHistory') || '[]');
+        let currentGrass = parseInt(localStorage.getItem('grassCount') || '0');
+        
+        // 更新牧草數量
+        function updateGrassCount(value) {
+            const count = Math.max(0, Math.min(16, parseInt(value) || 0));
+            currentGrass = count;
+            localStorage.setItem('grassCount', count);
+            
+            // 更新 UI
+            document.getElementById('grassCount').textContent = count;
+            document.getElementById('grassInput').value = count;
+            document.getElementById('progressBar').style.width = (count / 16 * 100) + '%';
+            
+            // 更新等級
+            updateUserLevel(count);
+            
+            // 更新下一等級提示
+            updateNextLevelInfo(count);
+            
+            // 更新兌換按鈕狀態
+            updateRedeemButtons(count);
+        }
+        
+        // 更新用戶等級
+        function updateUserLevel(count) {
+            let currentLevel = levelConfig[0];
+            for (let i = levelConfig.length - 1; i >= 0; i--) {
+                if (count >= levelConfig[i].points) {
+                    currentLevel = levelConfig[i];
+                    break;
+                }
+            }
+            document.getElementById('userLevel').textContent = currentLevel.name;
+        }
+        
+        // 更新下一等級提示
+        function updateNextLevelInfo(count) {
+            const nextLevelCard = document.getElementById('nextLevelCard');
+            const nextLevelText = document.getElementById('nextLevelText');
+            const nextLevelCount = document.getElementById('nextLevelCount');
+            
+            let nextLevel = null;
+            for (let i = 0; i < levelConfig.length; i++) {
+                if (count < levelConfig[i].points) {
+                    nextLevel = levelConfig[i];
+                    break;
+                }
+            }
+            
+            if (nextLevel) {
+                const remaining = nextLevel.points - count;
+                nextLevelText.textContent = `還差 ${remaining} 份即可升級為${nextLevel.name}`;
+                nextLevelCount.textContent = remaining;
+                nextLevelCard.style.display = 'block';
+            } else {
+                nextLevelText.textContent = '🎉 恭喜！您已達到最高等級！';
+                nextLevelCount.textContent = '✓';
+                nextLevelCard.classList.add('bg-gradient-to-r', 'from-yellow-50', 'to-white', 'border-yellow-300');
+            }
+        }
+        
+        // 更新兌換按鈕狀態
+        function updateRedeemButtons(count) {
+            const rewardItems = document.querySelectorAll('.reward-item');
+            
+            rewardItems.forEach(item => {
+                const required = parseInt(item.dataset.required);
+                const btn = item.querySelector('.redeem-btn');
+                const rewardId = btn.dataset.reward;
+                const isRedeemed = redeemHistory.some(h => h.rewardId === rewardId);
+                
+                if (isRedeemed) {
+                    btn.textContent = '已兌換';
+                    btn.disabled = true;
+                    btn.className = 'redeem-btn px-5 py-2 rounded-full font-bold text-sm transition-all bg-gray-300 text-gray-500 cursor-not-allowed';
+                    item.classList.add('opacity-60');
+                } else if (count >= required) {
+                    btn.textContent = '立即兌換';
+                    btn.disabled = false;
+                    btn.className = 'redeem-btn px-5 py-2 rounded-full font-bold text-sm transition-all bg-brand-primary text-white hover:bg-brand-primary/90 shadow-md hover:shadow-lg cursor-pointer';
+                    btn.onclick = () => redeemReward(rewardId, required);
+                    item.classList.remove('opacity-60');
+                    item.classList.add('ring-2', 'ring-brand-primary/30');
+                } else {
+                    btn.textContent = '未達門檻';
+                    btn.disabled = true;
+                    btn.className = 'redeem-btn px-5 py-2 rounded-full font-bold text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed bg-gray-200 text-gray-500';
+                    item.classList.remove('opacity-60', 'ring-2', 'ring-brand-primary/30');
+                }
+            });
+        }
+        
+        // 兌換獎勵
+        function redeemReward(rewardId, points) {
+            const levelNames = {
+                'level1': '初級品鑑家',
+                'level2': '進階品鑑家',
+                'level3': '莊園探索家',
+                'level4': '頂級鑑賞大使'
+            };
+            
+            const rewards = {
+                'level1': '鮮奶金 100 點',
+                'level2': '鮮奶金 188 點 + 全家 A2β酪蛋白鮮乳 200ml',
+                'level3': '鮮奶金 450 點 + 獨家 Line 貼圖',
+                'level4': '鮮奶金 1688 點 + 桂芳牧場體驗券兩張'
+            };
+            
+            if (confirm(`確定要兌換「${levelNames[rewardId]}」的獎勵嗎？\n\n獎勵內容：${rewards[rewardId]}`)) {
+                // 記錄兌換
+                const record = {
+                    rewardId: rewardId,
+                    levelName: levelNames[rewardId],
+                    reward: rewards[rewardId],
+                    points: points,
+                    date: new Date().toLocaleString('zh-TW')
+                };
+                
+                redeemHistory.push(record);
+                localStorage.setItem('redeemHistory', JSON.stringify(redeemHistory));
+                
+                // 更新 UI
+                updateRedeemButtons(currentGrass);
+                renderRedeemHistory();
+                
+                // 顯示成功訊息
+                showSuccessMessage(levelNames[rewardId]);
+            }
+        }
+        
+        // 顯示成功訊息
+        function showSuccessMessage(levelName) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-4 rounded-xl shadow-2xl z-50 flex items-center gap-3 animate-[slideUp_0.3s_ease-out]';
+            toast.innerHTML = `
+                <span class="text-2xl">🎉</span>
+                <div>
+                    <p class="font-bold">兌換成功！</p>
+                    <p class="text-sm opacity-90">已成功兌換「${levelName}」獎勵</p>
+                </div>
+            `;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(-20px)';
+                toast.style.transition = 'all 0.3s ease-out';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+        
+        // 渲染兌換記錄
+        function renderRedeemHistory() {
+            const container = document.getElementById('redeemHistory');
+            
+            if (redeemHistory.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 text-gray-400">
+                        <span class="text-4xl mb-3 block">📭</span>
+                        <p class="text-sm">尚無兌換記錄</p>
+                        <p class="text-xs mt-1">達到等級門檻後即可兌換獎勵</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = redeemHistory.map((record, index) => `
+                <div class="flex items-center justify-between p-3 bg-brand-pale/50 rounded-lg">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                            <span class="text-green-600">✓</span>
+                        </div>
+                        <div>
+                            <p class="font-bold text-gray-800 text-sm">${record.levelName}</p>
+                            <p class="text-xs text-gray-500">${record.reward}</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-xs text-gray-500">${record.date}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // 初始化兌換中心
+        function initRedeemCenter() {
+            updateGrassCount(currentGrass);
+            renderRedeemHistory();
+        }
+        
+        // Initialize Search Input Event
+        document.addEventListener('DOMContentLoaded', () => {
+             const searchInput = document.getElementById('storeSearchInput');
+             if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    renderTable(e.target.value);
+                });
+            }
+            
+            // 初始化兌換中心
+            initRedeemCenter();
+            
+            // Start at home
+            switchView('home');
+        });
+
+    </script>
+</body>
+</html>
