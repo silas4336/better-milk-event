@@ -4,10 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>鮮乳坊莊園品鑑同樂會</title>
-    <!-- 獨特字體：Playfair Display 優雅標題 + Zen Maru Gothic 圓潤日系中文 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- 使用系統常見無襯線字體 -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <script>
@@ -27,8 +24,8 @@
                         }
                     },
                     fontFamily: {
-                        display: ['Playfair Display', 'serif'],
-                        sans: ['Zen Maru Gothic', 'Noto Sans TC', 'sans-serif'],
+                        display: ['"Noto Sans TC"', '"Microsoft JhengHei"', '"PingFang TC"', 'Arial', 'sans-serif'],
+                        sans: ['"Noto Sans TC"', '"Microsoft JhengHei"', '"PingFang TC"', 'Arial', 'sans-serif'],
                     }
                 }
             }
@@ -209,7 +206,7 @@
         /* ===== 文字顏色 ===== */
         h1, h2, h3 { 
             color: #F3A69D;
-            font-family: 'Playfair Display', serif;
+            font-family: 'Noto Sans TC', 'Microsoft JhengHei', 'PingFang TC', Arial, sans-serif;
         }
         
         h1 { letter-spacing: 0.02em; }
@@ -283,7 +280,7 @@
         
         /* 數字強調樣式 */
         .number-highlight {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Noto Sans TC', 'Microsoft JhengHei', 'PingFang TC', Arial, sans-serif;
             font-weight: 700;
             background: linear-gradient(135deg, #F3A69D, #FBDACC);
             background-clip: text;
@@ -297,7 +294,7 @@
     <div id="app" class="min-h-screen flex flex-col">
         
         <!-- Header -->
-        <header class="bg-primary-gradient text-white py-6 md:py-8 lg:py-10 text-center shadow-2xl relative overflow-hidden">
+        <header class="bg-primary-gradient text-gray-800 py-6 md:py-8 lg:py-10 text-center shadow-2xl relative overflow-hidden">
             <!-- 裝飾性背景圖案 -->
             <div class="absolute top-0 left-0 w-full h-full">
                 <div class="absolute top-10 left-10 w-32 h-32 rounded-full bg-white/5 blur-2xl"></div>
@@ -315,11 +312,11 @@
                 <div class="flex flex-col lg:flex-row lg:items-center lg:justify-center lg:gap-12">
                     <!-- 品牌 Logo -->
                     <div class="mb-4 lg:mb-0">
-                        <img src="assets/logo-zh-en/combo-horizontal-1-white.png" alt="鮮乳坊 Better Milk" class="h-10 md:h-12 lg:h-14 mx-auto lg:mx-0 drop-shadow-lg">
+                        <img src="assets/logo-zh-en/combo-horizontal-1.png" alt="鮮乳坊 Better Milk" class="h-10 md:h-12 lg:h-14 mx-auto lg:mx-0 drop-shadow-lg">
                     </div>
                     <!-- 標題區塊 -->
                     <div class="lg:text-left">
-                        <h1 class="font-display text-2xl md:text-3xl lg:text-4xl font-bold mb-2 leading-tight tracking-wide text-white">
+                        <h1 class="font-display text-2xl md:text-3xl lg:text-4xl font-bold mb-2 leading-tight tracking-wide text-gray-800">
                             <span class="inline-block float-animation">🥛</span>
                             <span class="mx-2">莊園品鑑同樂會</span>
                             <span class="inline-block float-animation" style="animation-delay: 0.5s;">✨</span>
@@ -330,7 +327,7 @@
                     </div>
                     <!-- 活動期間標籤 -->
                     <div class="mt-4 lg:mt-0">
-                        <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-1.5">
+                        <div class="inline-flex items-center gap-2 bg-white/50 backdrop-blur-sm rounded-full px-4 py-1.5 text-gray-700">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
                             <span class="text-xs md:text-sm font-medium">2025/01/01 – 2025/02/28</span>
                         </div>
@@ -705,7 +702,7 @@
             <div id="redeem-view" class="view-section">
                 <!-- 用戶狀態卡片 -->
                 <section class="mb-8 lg:mb-10">
-                    <div class="bg-gradient-to-br from-brand-primary to-brand-light rounded-2xl lg:rounded-3xl p-6 lg:p-8 shadow-xl text-white relative overflow-hidden">
+                    <div class="bg-gradient-to-br from-brand-primary to-brand-light rounded-2xl lg:rounded-3xl p-6 lg:p-8 shadow-xl text-gray-800 relative overflow-hidden">
                         <!-- 裝飾性背景 -->
                         <div class="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full blur-3xl"></div>
                         <div class="absolute bottom-0 left-0 w-32 h-32 bg-white/5 rounded-full blur-2xl"></div>
@@ -714,40 +711,40 @@
                             <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
                                 <!-- 左側：用戶資訊 -->
                                 <div class="flex items-center gap-4">
-                                    <div class="w-16 h-16 lg:w-20 lg:h-20 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
+                                    <div class="w-16 h-16 lg:w-20 lg:h-20 bg-white/40 backdrop-blur-sm rounded-2xl flex items-center justify-center">
                                         <span class="text-3xl lg:text-4xl">🥛</span>
                                     </div>
                                     <div>
-                                        <p class="text-white/80 text-sm mb-1">您的品鑑等級</p>
-                                        <h2 class="text-xl lg:text-2xl font-bold" id="userLevel">尚未開始</h2>
-                                        <p class="text-white/70 text-sm mt-1">會員編號：<span id="memberIdDisplay">未登入</span></p>
+                                        <p class="text-gray-600 text-sm mb-1">您的品鑑等級</p>
+                                        <h2 class="text-xl lg:text-2xl font-bold text-gray-800" id="userLevel">尚未開始</h2>
+                                        <p class="text-gray-600 text-sm mt-1">會員編號：<span id="memberIdDisplay">未登入</span></p>
                                     </div>
                                 </div>
                                 
                                 <!-- 右側：牧草數量 -->
-                                <div class="bg-white/15 backdrop-blur-sm rounded-2xl p-4 lg:p-6 text-center">
-                                    <p class="text-white/80 text-sm mb-2">目前累積牧草</p>
-                                    <div class="flex items-baseline justify-center gap-2">
+                                <div class="bg-white/50 backdrop-blur-sm rounded-2xl p-4 lg:p-6 text-center">
+                                    <p class="text-gray-600 text-sm mb-2">目前累積牧草</p>
+                                    <div class="flex items-baseline justify-center gap-2 text-gray-800">
                                         <span class="text-4xl lg:text-5xl font-black" id="grassCount">0</span>
                                         <span class="text-lg">/ 16 份</span>
                                     </div>
-                                    <div class="mt-3 w-full bg-white/20 rounded-full h-2 overflow-hidden">
-                                        <div class="h-full bg-white rounded-full transition-all duration-500" id="progressBar" style="width: 0%"></div>
+                                    <div class="mt-3 w-full bg-gray-300/50 rounded-full h-2 overflow-hidden">
+                                        <div class="h-full bg-brand-primary rounded-full transition-all duration-500" id="progressBar" style="width: 0%"></div>
                                     </div>
                                 </div>
                             </div>
                             
                             <!-- 輸入區塊 -->
-                            <div class="mt-6 pt-6 border-t border-white/20">
+                            <div class="mt-6 pt-6 border-t border-gray-300/50">
                                 <div class="flex flex-col sm:flex-row gap-4 items-center justify-center">
                                     <div class="flex items-center gap-3">
-                                        <label class="text-white/90 text-sm font-medium">輸入您的牧草數量：</label>
+                                        <label class="text-gray-700 text-sm font-medium">輸入您的牧草數量：</label>
                                         <input type="number" id="grassInput" min="0" max="16" value="0" 
-                                            class="w-20 px-3 py-2 rounded-lg bg-white/20 border border-white/30 text-white text-center font-bold text-lg focus:outline-none focus:ring-2 focus:ring-white/50 placeholder-white/50"
+                                            class="w-20 px-3 py-2 rounded-lg bg-white/70 border border-gray-300 text-gray-800 text-center font-bold text-lg focus:outline-none focus:ring-2 focus:ring-brand-primary/50"
                                             onchange="updateGrassCount(this.value)">
                                     </div>
                                     <button onclick="updateGrassCount(document.getElementById('grassInput').value)" 
-                                        class="px-6 py-2 bg-white text-brand-primary font-bold rounded-full hover:bg-white/90 transition-all shadow-lg hover:shadow-xl">
+                                        class="px-6 py-2 bg-gray-800 text-white font-bold rounded-full hover:bg-gray-700 transition-all shadow-lg hover:shadow-xl">
                                         更新進度
                                     </button>
                                 </div>
@@ -910,7 +907,7 @@
 
         </main>
 
-        <footer class="bg-primary-gradient text-white rounded-t-[2rem] lg:rounded-t-[3rem] p-8 lg:p-10 mt-10 lg:mt-12 relative overflow-hidden">
+        <footer class="bg-primary-gradient text-gray-800 rounded-t-[2rem] lg:rounded-t-[3rem] p-8 lg:p-10 mt-10 lg:mt-12 relative overflow-hidden">
             <!-- 裝飾性背景 -->
             <div class="absolute top-0 left-0 w-full h-full">
                 <div class="absolute top-0 left-0 w-full h-full opacity-5" style="background-image: radial-gradient(#fff 1.5px, transparent 1.5px); background-size: 20px 20px;"></div>
@@ -923,11 +920,11 @@
                 <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8 lg:gap-12 mb-8">
                     <!-- Logo 和標語 -->
                     <div class="text-center lg:text-left">
-                        <img src="assets/logo-zh-en/basic-combo-white.png" alt="鮮乳坊 Better Milk" class="h-12 lg:h-14 mx-auto lg:mx-0 mb-4 drop-shadow-lg">
-                        <h3 class="font-display text-lg lg:text-xl font-bold mb-2 tracking-wide text-white">
+                        <img src="assets/logo-zh-en/basic-combo.png" alt="鮮乳坊 Better Milk" class="h-12 lg:h-14 mx-auto lg:mx-0 mb-4 drop-shadow-lg">
+                        <h3 class="font-display text-lg lg:text-xl font-bold mb-2 tracking-wide text-gray-800">
                             堅持好農品質，值得您放心品鑑
                         </h3>
-                        <p class="text-white/80 font-medium tracking-wider text-sm">
+                        <p class="text-gray-600 font-medium tracking-wider text-sm">
                             單一乳源 ・ 獸醫把關 ・ 優於國家標準
                         </p>
                     </div>
@@ -938,21 +935,21 @@
                             <div class="w-24 h-24 lg:w-28 lg:h-28 bg-white rounded-2xl mb-3 flex items-center justify-center p-2 overflow-hidden shadow-xl transition-all duration-500 group-hover:scale-105">
                                  <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.bettermilk.com.tw/&color=F3A69D" alt="官網 QR Code" class="w-full h-full object-contain">
                             </div>
-                            <p class="text-xs font-bold text-white/90">官方網站</p>
+                            <p class="text-xs font-bold text-gray-700">官方網站</p>
                         </div>
                         <div class="flex flex-col items-center group">
                             <div class="w-24 h-24 lg:w-28 lg:h-28 bg-white rounded-2xl mb-3 flex items-center justify-center p-2 overflow-hidden shadow-xl transition-all duration-500 group-hover:scale-105">
                                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://page.line.me/bettermilk&color=06C755" alt="LINE 官方帳號 QR Code" class="w-full h-full object-contain">
                             </div>
-                            <p class="text-xs font-bold text-white/90">LINE 官方帳號</p>
+                            <p class="text-xs font-bold text-gray-700">LINE 官方帳號</p>
                         </div>
                     </div>
                 </div>
                 
                 <!-- 版權資訊 -->
-                <div class="text-center text-xs lg:text-sm text-white/60 border-t border-white/15 pt-6">
+                <div class="text-center text-xs lg:text-sm text-gray-600 border-t border-gray-300/50 pt-6">
                     <p class="mb-1">&copy; 2025 鮮乳坊 Better Milk. All Rights Reserved.</p>
-                    <p class="text-xs text-white/40">詳細活動規則與鮮奶金使用效期，請以鮮乳坊 LINE 官方帳號公告為準。</p>
+                    <p class="text-xs text-gray-500">詳細活動規則與鮮奶金使用效期，請以鮮乳坊 LINE 官方帳號公告為準。</p>
                 </div>
             </div>
         </footer>
@@ -1108,7 +1105,7 @@
             }
 
             Chart.defaults.color = '#333333';
-            Chart.defaults.font.family = "'Inter', 'Noto Sans TC', sans-serif";
+            Chart.defaults.font.family = "'Noto Sans TC', 'Microsoft JhengHei', Arial, sans-serif";
 
             chartInstance = new Chart(ctx, {
                 type: 'bar',
@@ -1148,13 +1145,13 @@
                             labels: { 
                                 usePointStyle: true, 
                                 padding: 24,
-                                font: { family: "'Zen Maru Gothic', sans-serif", size: 12 }
+                                font: { family: "'Noto Sans TC', 'Microsoft JhengHei', Arial, sans-serif", size: 12 }
                             } 
                         },
                         tooltip: {
                             backgroundColor: 'rgba(243, 166, 157, 0.95)',
-                            titleFont: { size: 14, weight: 'bold', family: "'Zen Maru Gothic', sans-serif" },
-                            bodyFont: { family: "'Zen Maru Gothic', sans-serif" },
+                            titleFont: { size: 14, weight: 'bold', family: "'Noto Sans TC', Arial, sans-serif" },
+                            bodyFont: { family: "'Noto Sans TC', Arial, sans-serif" },
                             padding: 14,
                             cornerRadius: 10,
                             callbacks: {
@@ -1172,7 +1169,7 @@
                         x: { 
                             stacked: true, 
                             grid: { display: false },
-                            ticks: { font: { family: "'Zen Maru Gothic', sans-serif" } }
+                            ticks: { font: { family: "'Noto Sans TC', Arial, sans-serif" } }
                         },
                         y: { 
                             stacked: true,
@@ -1180,12 +1177,12 @@
                             title: { 
                                 display: true, 
                                 text: '回饋總價值 (TWD)', 
-                                font: { weight: 'bold', family: "'Zen Maru Gothic', sans-serif" } 
+                                font: { weight: 'bold', family: "'Noto Sans TC', Arial, sans-serif" } 
                             },
                             type: 'logarithmic',
                             min: 10,
                             ticks: {
-                                font: { family: "'Zen Maru Gothic', sans-serif" },
+                                font: { family: "'Noto Sans TC', Arial, sans-serif" },
                                 color: function(context) {
                                     if (context.tick.value >= 4000) return ACCENT_COLOR; 
                                     return '#2D2926';
