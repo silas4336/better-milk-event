@@ -89,12 +89,12 @@
         
         /* ===== 滾動條 ===== */
         .scrollbar-thin::-webkit-scrollbar { height: 6px; }
-        .scrollbar-thin::-webkit-scrollbar-track { background: #FFF5F2; border-radius: 3px; }
+        .scrollbar-thin::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 3px; }
         .scrollbar-thin::-webkit-scrollbar-thumb { 
-            background: linear-gradient(90deg, #F3A69D, #FBDACC);
+            background: #ccc;
             border-radius: 3px; 
         }
-        .scrollbar-thin::-webkit-scrollbar-thumb:hover { background: #F3A69D; }
+        .scrollbar-thin::-webkit-scrollbar-thumb:hover { background: #999; }
         
         /* ===== 表格樣式 ===== */
         .sticky-shadow { box-shadow: 4px 0 12px -4px rgba(243, 166, 157, 0.25); }
@@ -308,29 +308,22 @@
                 </svg>
             </div>
             <div class="relative z-10 cursor-pointer max-w-6xl mx-auto px-4" onclick="switchView('home')">
-                <!-- 電腦版：橫向佈局 -->
-                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-center lg:gap-12">
-                    <!-- 品牌 Logo -->
-                    <div class="mb-4 lg:mb-0">
-                        <img src="assets/logo-zh-en/combo-horizontal-1.png" alt="鮮乳坊 Better Milk" class="h-10 md:h-12 lg:h-14 mx-auto lg:mx-0 drop-shadow-lg">
+                <!-- 標題區塊（置中） -->
+                <div class="text-center">
+                    <!-- 鮮乳坊 Logo（白色版本） -->
+                    <div class="mb-4">
+                        <img src="assets/logo-zh-en/combo-horizontal-1-white.png" alt="鮮乳坊 Better Milk" class="h-10 md:h-12 lg:h-14 mx-auto drop-shadow-lg">
                     </div>
-                    <!-- 標題區塊 -->
-                    <div class="lg:text-left">
-                        <h1 class="font-display text-2xl md:text-3xl lg:text-4xl font-bold mb-2 leading-tight tracking-wide text-gray-800">
-                            <span class="inline-block float-animation">🥛</span>
-                            <span class="mx-2">莊園品鑑同樂會</span>
-                            <span class="inline-block float-animation" style="animation-delay: 0.5s;">✨</span>
-                        </h1>
-                        <p class="text-sm md:text-base opacity-95 font-light tracking-wide">
-                            蒐集牧草，晉升頂級品鑑家
-                        </p>
-                    </div>
+                    <h1 class="font-display text-2xl md:text-3xl lg:text-4xl font-bold mb-2 leading-tight tracking-wide text-gray-800">
+                        莊園品鑑同樂會
+                    </h1>
+                    <p class="text-sm md:text-base opacity-95 font-light tracking-wide mb-3">
+                        蒐集牧草，晉升頂級品鑑家
+                    </p>
                     <!-- 活動期間標籤 -->
-                    <div class="mt-4 lg:mt-0">
-                        <div class="inline-flex items-center gap-2 bg-white/50 backdrop-blur-sm rounded-full px-4 py-1.5 text-gray-700">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
-                            <span class="text-xs md:text-sm font-medium">2025/01/01 – 2025/02/28</span>
-                        </div>
+                    <div class="inline-flex items-center gap-2 bg-white/50 backdrop-blur-sm rounded-full px-4 py-1.5 text-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                        <span class="text-xs md:text-sm font-medium">2025/01/01 – 2025/02/28</span>
                     </div>
                 </div>
             </div>
@@ -339,27 +332,23 @@
         <!-- Navigation -->
         <nav class="bg-white/95 backdrop-blur-lg shadow-lg sticky top-0 z-50 border-b border-brand-light/30">
             <div class="max-w-7xl mx-auto px-4 lg:px-8">
-                <div class="flex items-center justify-between py-2 lg:py-3">
-                    <!-- Logo 在左側 -->
-                    <div class="flex-shrink-0 cursor-pointer" onclick="switchView('home')">
-                        <img src="assets/logo-zh/logo-horizontal.png" alt="鮮乳坊" class="h-7 md:h-8 lg:h-9">
-                    </div>
-                    <!-- 導航按鈕 -->
+                <div class="flex items-center justify-center py-2 lg:py-3">
+                    <!-- 導航按鈕（置中） -->
                     <div class="flex space-x-1 md:space-x-2 lg:space-x-4 overflow-x-auto">
-                        <button onclick="switchView('home')" id="nav-home" class="nav-btn px-3 md:px-4 lg:px-5 py-1.5 lg:py-2 rounded-full text-xs md:text-sm font-bold text-gray-600 hover:text-brand-primary hover:bg-brand-pale whitespace-nowrap active">
-                            <span class="mr-1">🏠</span><span class="hidden sm:inline">首頁</span>
+                        <button onclick="switchView('home')" id="nav-home" class="nav-btn px-4 md:px-5 lg:px-6 py-1.5 lg:py-2 rounded-full text-xs md:text-sm font-bold text-gray-600 hover:text-brand-primary hover:bg-brand-pale whitespace-nowrap active">
+                            首頁
                         </button>
-                        <button onclick="switchView('rules')" id="nav-rules" class="nav-btn px-3 md:px-4 lg:px-5 py-1.5 lg:py-2 rounded-full text-xs md:text-sm font-bold text-gray-600 hover:text-brand-primary hover:bg-brand-pale whitespace-nowrap">
-                            <span class="mr-1">📜</span><span class="hidden sm:inline">活動辦法</span>
+                        <button onclick="switchView('rules')" id="nav-rules" class="nav-btn px-4 md:px-5 lg:px-6 py-1.5 lg:py-2 rounded-full text-xs md:text-sm font-bold text-gray-600 hover:text-brand-primary hover:bg-brand-pale whitespace-nowrap">
+                            活動辦法
                         </button>
-                        <button onclick="switchView('stores')" id="nav-stores" class="nav-btn px-3 md:px-4 lg:px-5 py-1.5 lg:py-2 rounded-full text-xs md:text-sm font-bold text-gray-600 hover:text-brand-primary hover:bg-brand-pale whitespace-nowrap">
-                            <span class="mr-1">📍</span><span class="hidden sm:inline">銷售據點</span>
+                        <button onclick="switchView('stores')" id="nav-stores" class="nav-btn px-4 md:px-5 lg:px-6 py-1.5 lg:py-2 rounded-full text-xs md:text-sm font-bold text-gray-600 hover:text-brand-primary hover:bg-brand-pale whitespace-nowrap">
+                            銷售據點
                         </button>
-                        <button onclick="switchView('rewards')" id="nav-rewards" class="nav-btn px-3 md:px-4 lg:px-5 py-1.5 lg:py-2 rounded-full text-xs md:text-sm font-bold text-gray-600 hover:text-brand-primary hover:bg-brand-pale whitespace-nowrap">
-                            <span class="mr-1">🎁</span><span class="hidden sm:inline">獎勵升級</span>
+                        <button onclick="switchView('rewards')" id="nav-rewards" class="nav-btn px-4 md:px-5 lg:px-6 py-1.5 lg:py-2 rounded-full text-xs md:text-sm font-bold text-gray-600 hover:text-brand-primary hover:bg-brand-pale whitespace-nowrap">
+                            獎勵升級
                         </button>
-                        <button onclick="switchView('redeem')" id="nav-redeem" class="nav-btn px-3 md:px-4 lg:px-5 py-1.5 lg:py-2 rounded-full text-xs md:text-sm font-bold text-brand-gold hover:text-white hover:bg-brand-gold whitespace-nowrap border border-brand-gold">
-                            <span class="mr-1">🎫</span><span class="hidden sm:inline">兌換中心</span>
+                        <button onclick="switchView('redeem')" id="nav-redeem" class="nav-btn px-4 md:px-5 lg:px-6 py-1.5 lg:py-2 rounded-full text-xs md:text-sm font-bold text-brand-gold hover:text-white hover:bg-brand-gold whitespace-nowrap border border-brand-gold">
+                            兌換中心
                         </button>
                     </div>
                 </div>
@@ -396,12 +385,6 @@
                                 <span class="font-bold text-brand-primary">解鎖每一滴鮮乳背後的莊園級價值。</span>
                             </p>
                         </div>
-                        <div class="lg:w-1/4 mt-6 lg:mt-0 flex justify-center relative z-10">
-                            <div class="relative">
-                                <div class="text-6xl lg:text-7xl drop-shadow-lg float-animation">🥛</div>
-                                <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-12 lg:w-16 h-2 lg:h-3 bg-brand-light/40 rounded-full blur-sm"></div>
-                            </div>
-                        </div>
                     </div>
                 </section>
 
@@ -418,7 +401,7 @@
                         <div onclick="switchView('rules')" class="card h-full border-2 border-transparent hover:border-brand-primary cursor-pointer group bg-gradient-to-br from-white to-brand-pale/30 p-5 lg:p-6">
                             <div class="relative mb-4 lg:mb-5">
                                 <div class="w-12 h-12 lg:w-14 lg:h-14 mx-auto bg-gradient-to-br from-brand-light to-brand-pale rounded-xl lg:rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-lg">
-                                    <span class="text-2xl lg:text-3xl">📜</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-primary"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
                                 </div>
                                 <div class="absolute -top-1 -right-1 w-16 h-16 mx-auto bg-brand-primary/5 rounded-full blur-xl group-hover:bg-brand-primary/10 transition-all"></div>
                             </div>
@@ -436,7 +419,7 @@
                         <div onclick="switchView('stores')" class="card h-full border-2 border-transparent hover:border-brand-primary cursor-pointer group bg-gradient-to-br from-white to-brand-mint/10 p-5 lg:p-6">
                             <div class="relative mb-4 lg:mb-5">
                                 <div class="w-12 h-12 lg:w-14 lg:h-14 mx-auto bg-gradient-to-br from-brand-mint/50 to-brand-mint/20 rounded-xl lg:rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:-rotate-3 transition-all duration-500 shadow-lg">
-                                    <span class="text-2xl lg:text-3xl">📍</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-primary"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                                 </div>
                                 <div class="absolute -top-1 -right-1 w-16 h-16 mx-auto bg-brand-mint/5 rounded-full blur-xl group-hover:bg-brand-mint/15 transition-all"></div>
                             </div>
@@ -454,7 +437,7 @@
                         <div onclick="switchView('rewards')" class="card h-full border-2 border-transparent hover:border-brand-gold cursor-pointer group bg-gradient-to-br from-white to-brand-gold/10 p-5 lg:p-6">
                             <div class="relative mb-4 lg:mb-5">
                                 <div class="w-12 h-12 lg:w-14 lg:h-14 mx-auto bg-gradient-to-br from-brand-gold/40 to-brand-gold/20 rounded-xl lg:rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-lg">
-                                    <span class="text-2xl lg:text-3xl">🎁</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-gold"><path d="M20 12v10H4V12"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
                                 </div>
                                 <div class="absolute -top-1 -right-1 w-16 h-16 mx-auto bg-brand-gold/5 rounded-full blur-xl group-hover:bg-brand-gold/15 transition-all"></div>
                             </div>
@@ -474,7 +457,7 @@
             <!-- RULES VIEW -->
             <div id="rules-view" class="view-section">
                 <section class="mb-8 lg:mb-10">
-                    <h2 class="text-2xl lg:text-3xl font-bold text-brand-primary mb-4 lg:mb-6 text-center">🌟 輕鬆入門頂級品鑑</h2>
+                    <h2 class="text-2xl lg:text-3xl font-bold text-brand-primary mb-4 lg:mb-6 text-center">輕鬆入門頂級品鑑</h2>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6">
                         <div class="card border-t-4 border-brand-primary text-center bg-brand-pale">
                             <h3 class="text-lg font-bold text-gray-800 mb-1">消費門檻</h3>
@@ -505,10 +488,12 @@
                 </section>
 
                 <section class="mb-8 lg:mb-10">
-                    <h2 class="text-2xl lg:text-3xl font-bold text-brand-primary mb-4 lg:mb-6 text-center">🔍 登錄流程：一鍵完成，牧草入袋</h2>
+                    <h2 class="text-2xl lg:text-3xl font-bold text-brand-primary mb-4 lg:mb-6 text-center">登錄流程</h2>
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
                         <div class="bg-white rounded-2xl p-6 shadow-md relative border border-brand-light">
-                            <div class="absolute top-4 right-4 w-12 h-12 bg-brand-light rounded-full flex items-center justify-center text-2xl">🏪</div>
+                            <div class="absolute top-4 right-4 w-10 h-10 bg-brand-light rounded-full flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-primary"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/></svg>
+                            </div>
                             <h3 class="text-xl font-bold mb-4 text-brand-primary">實體通路</h3>
                             <p class="text-sm text-gray-500 mb-4 font-medium">便利商店 / 量販店 / 超市</p>
                             <ol class="list-decimal list-inside space-y-3 text-gray-800 font-medium">
@@ -518,7 +503,9 @@
                             </ol>
                         </div>
                         <div class="bg-white rounded-2xl p-6 shadow-md relative border border-brand-light">
-                             <div class="absolute top-4 right-4 w-12 h-12 bg-brand-light rounded-full flex items-center justify-center text-2xl">🌐</div>
+                             <div class="absolute top-4 right-4 w-10 h-10 bg-brand-light rounded-full flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-primary"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                            </div>
                             <h3 class="text-xl font-bold mb-4 text-brand-primary">官網通路</h3>
                             <p class="text-sm text-gray-500 mb-4 font-medium">鮮乳坊官方網站</p>
                             <div class="flex items-center justify-center h-32 bg-brand-pale rounded-xl text-brand-primary font-bold text-lg border-2 border-dashed border-brand-primary">
@@ -529,7 +516,7 @@
                         </div>
                     </div>
                     <div class="mt-6 text-center">
-                        <p class="text-sm text-red-600 bg-red-50 inline-block px-6 py-3 rounded-full font-bold shadow-sm border border-red-100">⚠️ 注意：消費後請務必主動登錄發票，以確保您的牧草順利累積。</p>
+                        <p class="text-sm text-red-600 bg-red-50 inline-block px-6 py-3 rounded-full font-bold shadow-sm border border-red-100">注意：消費後請務必主動登錄發票，以確保您的牧草順利累積。</p>
                     </div>
                 </section>
                 
@@ -541,43 +528,41 @@
             <!-- STORES VIEW -->
             <div id="stores-view" class="view-section">
                 <section class="mb-8 lg:mb-10">
-                    <div class="text-center mb-4 lg:mb-6">
-                        <h2 class="text-2xl lg:text-3xl font-bold text-brand-primary mb-2">📍 全台銷售據點與產品一覽</h2>
-                        <p class="text-sm lg:text-base text-gray-600 font-medium">查詢離您最近的通路，開啟您的品鑑之旅</p>
+                    <div class="mb-6 lg:mb-8">
+                        <h2 class="text-2xl lg:text-3xl font-bold text-brand-primary mb-2">銷售據點</h2>
+                        <p class="text-sm text-gray-500">查詢各通路販售的鮮乳坊產品</p>
                     </div>
                     
-                    <div class="bg-white rounded-xl shadow-lg border border-brand-light/50 overflow-hidden flex flex-col">
-                        <div class="p-4 bg-brand-pale border-b border-brand-light flex flex-col md:flex-row justify-between items-center gap-4">
-                            <div class="text-gray-800 font-bold flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-primary"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/><path d="M22 7v3a2 2 0 0 1-2 2v0a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12v0a2 2 0 0 1-2-2V7"/></svg>
-                                通路快速查詢
-                            </div>
-                            <div class="relative w-full md:w-72">
-                                <input type="text" id="storeSearchInput" placeholder="輸入通路名稱 (例: 全聯)..." 
-                                    class="pl-10 pr-4 py-2.5 w-full border border-brand-primary/30 rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-brand-primary outline-none text-sm transition-all shadow-sm bg-white">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-brand-primary">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-                                </div>
+                    <!-- 搜尋列 -->
+                    <div class="mb-4">
+                        <div class="relative w-full md:w-80">
+                            <input type="text" id="storeSearchInput" placeholder="搜尋通路名稱..." 
+                                class="pl-10 pr-4 py-2.5 w-full border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-brand-primary outline-none text-sm transition-all bg-white">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="overflow-x-auto relative scrollbar-thin">
-                            <table class="w-full text-sm text-left border-collapse" id="distributionTable">
-                                <thead class="text-xs text-white bg-gradient-to-r from-brand-primary to-brand-light uppercase">
+                    <!-- 表格 -->
+                    <div class="bg-white rounded-lg border border-gray-200 overflow-hidden">
+                        <div class="overflow-x-auto scrollbar-thin">
+                            <table class="w-full text-sm border-collapse" id="distributionTable">
+                                <thead class="bg-gray-50 text-gray-600">
                                     <tr>
-                                        <th scope="col" class="sticky left-0 z-20 bg-brand-primary px-4 py-4 font-bold min-w-[140px] sticky-shadow border-r border-white/20">
-                                            通路名稱
+                                        <th scope="col" class="sticky left-0 z-20 bg-gray-50 px-4 py-3 font-semibold text-left min-w-[120px] border-r border-gray-200">
+                                            通路
                                         </th>
                                         <!-- Product Headers via JS -->
                                     </tr>
                                 </thead>
-                                <tbody id="distributionTableBody" class="text-gray-800">
+                                <tbody id="distributionTableBody" class="text-gray-700">
                                     <!-- Rows via JS -->
                                 </tbody>
                             </table>
                         </div>
-                        <div class="bg-brand-pale p-2 text-right text-xs text-gray-800 font-medium">
-                            * 資料更新時間：2023 Q4 • 左右滑動查看更多商品
+                        <div class="bg-gray-50 px-4 py-2 text-right text-xs text-gray-500 border-t border-gray-200">
+                            資料更新：2023 Q4 • 左右滑動查看更多
                         </div>
                     </div>
                 </section>
@@ -586,7 +571,7 @@
             <!-- REWARDS VIEW -->
             <div id="rewards-view" class="view-section">
                 <section class="mb-8 lg:mb-10">
-                    <h2 class="text-2xl lg:text-3xl font-bold text-brand-primary mb-4 lg:mb-6 text-center">🎯 您的品鑑升級之路</h2>
+                    <h2 class="text-2xl lg:text-3xl font-bold text-brand-primary mb-4 lg:mb-6 text-center">您的品鑑升級之路</h2>
                     <div class="bg-white rounded-xl lg:rounded-2xl p-4 md:p-6 lg:p-8 shadow-md border border-brand-light">
                         <div class="relative pt-6 pb-12">
                             <div class="h-4 bg-gray-200 rounded-full w-full overflow-hidden">
@@ -615,12 +600,12 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="text-center text-sm text-gray-500 mt-2">👇 完成任務，解鎖下方對應好禮 👇</p>
+                        <p class="text-center text-sm text-gray-500 mt-2">完成任務，解鎖下方對應好禮</p>
                     </div>
                 </section>
 
                 <section class="mb-8 lg:mb-10">
-                    <h2 class="text-2xl lg:text-3xl font-bold text-brand-primary mb-4 lg:mb-6 text-center">🎁 莊園好禮兌換</h2>
+                    <h2 class="text-2xl lg:text-3xl font-bold text-brand-primary mb-4 lg:mb-6 text-center">莊園好禮兌換</h2>
                     <p class="text-center text-sm lg:text-base text-gray-800 mb-4 lg:mb-6 max-w-2xl mx-auto font-medium">隨著品鑑等級提升，不僅鮮奶金加倍，更能解鎖獨家體驗與實體好禮！</p>
                     <div class="space-y-3 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-3 lg:gap-4">
                         <div class="card border-brand-light hover:shadow-lg transition flex flex-col justify-between bg-white">
@@ -676,8 +661,8 @@
                                     <p class="text-2xl font-black text-yellow-600 mt-2 border-b-2 border-yellow-100 pb-2">總價值 $4,486</p>
                                 </div>
                                 <ul class="text-sm text-gray-800 space-y-2 mb-4 font-bold">
-                                    <li class="flex items-start"><span class="mr-2 text-yellow-500">★</span> 鮮奶金 1688</li>
-                                    <li class="flex items-start"><span class="mr-2 text-yellow-500">★</span> 桂芳牧場活動體驗券兩張</li>
+                                    <li class="flex items-start"><span class="mr-2 text-yellow-500">•</span> 鮮奶金 1688</li>
+                                    <li class="flex items-start"><span class="mr-2 text-yellow-500">•</span> 桂芳牧場活動體驗券兩張</li>
                                 </ul>
                             </div>
                             <div class="text-xs text-yellow-700 bg-yellow-50 p-3 rounded-lg mt-2 font-bold text-center border border-yellow-100">
@@ -712,7 +697,7 @@
                                 <!-- 左側：用戶資訊 -->
                                 <div class="flex items-center gap-4">
                                     <div class="w-16 h-16 lg:w-20 lg:h-20 bg-white/40 backdrop-blur-sm rounded-2xl flex items-center justify-center">
-                                        <span class="text-3xl lg:text-4xl">🥛</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-primary"><path d="M8 2h8l2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4l2-2z"/><path d="M6 6h12"/></svg>
                                     </div>
                                     <div>
                                         <p class="text-gray-600 text-sm mb-1">您的品鑑等級</p>
@@ -759,7 +744,7 @@
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-4">
                                 <div class="w-12 h-12 bg-brand-pale rounded-xl flex items-center justify-center">
-                                    <span class="text-2xl">🎯</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-primary"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
                                 </div>
                                 <div>
                                     <p class="text-gray-500 text-sm">距離下一等級</p>
@@ -776,8 +761,8 @@
 
                 <!-- 可兌換獎勵列表 -->
                 <section class="mb-8 lg:mb-10">
-                    <h2 class="text-xl lg:text-2xl font-bold text-brand-primary mb-4 lg:mb-6 flex items-center gap-2">
-                        <span>🎁</span> 獎勵兌換區
+                    <h2 class="text-xl lg:text-2xl font-bold text-brand-primary mb-4 lg:mb-6">
+                        獎勵兌換區
                     </h2>
                     
                     <div class="space-y-4" id="rewardsList">
@@ -785,7 +770,7 @@
                         <div class="reward-item bg-white rounded-xl lg:rounded-2xl p-4 lg:p-5 shadow-md border border-brand-light/50 flex flex-col sm:flex-row sm:items-center gap-4 transition-all" data-required="3">
                             <div class="flex items-center gap-4 flex-grow">
                                 <div class="w-14 h-14 bg-brand-pale rounded-xl flex items-center justify-center flex-shrink-0">
-                                    <span class="text-2xl">🌱</span>
+                                    <span class="text-xl font-bold text-brand-primary">Lv.1</span>
                                 </div>
                                 <div class="flex-grow">
                                     <div class="flex items-center gap-2 mb-1">
@@ -804,7 +789,7 @@
                         <div class="reward-item bg-white rounded-xl lg:rounded-2xl p-4 lg:p-5 shadow-md border border-brand-light/50 flex flex-col sm:flex-row sm:items-center gap-4 transition-all" data-required="7">
                             <div class="flex items-center gap-4 flex-grow">
                                 <div class="w-14 h-14 bg-brand-light/50 rounded-xl flex items-center justify-center flex-shrink-0">
-                                    <span class="text-2xl">🌿</span>
+                                    <span class="text-xl font-bold text-brand-primary">Lv.2</span>
                                 </div>
                                 <div class="flex-grow">
                                     <div class="flex items-center gap-2 mb-1">
@@ -823,7 +808,7 @@
                         <div class="reward-item bg-white rounded-xl lg:rounded-2xl p-4 lg:p-5 shadow-md border border-brand-light/50 flex flex-col sm:flex-row sm:items-center gap-4 transition-all" data-required="12">
                             <div class="flex items-center gap-4 flex-grow">
                                 <div class="w-14 h-14 bg-brand-primary/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                                    <span class="text-2xl">🌳</span>
+                                    <span class="text-xl font-bold text-brand-primary">Lv.3</span>
                                 </div>
                                 <div class="flex-grow">
                                     <div class="flex items-center gap-2 mb-1">
@@ -843,7 +828,7 @@
                             <div class="absolute top-0 right-0 bg-yellow-400 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">🏆 最高等級</div>
                             <div class="flex items-center gap-4 flex-grow">
                                 <div class="w-14 h-14 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
-                                    <span class="text-2xl">👑</span>
+                                    <span class="text-lg font-bold text-white">MAX</span>
                                 </div>
                                 <div class="flex-grow">
                                     <div class="flex items-center gap-2 mb-1">
@@ -863,13 +848,12 @@
                 
                 <!-- 兌換記錄 -->
                 <section class="mb-8 lg:mb-10">
-                    <h2 class="text-xl lg:text-2xl font-bold text-brand-primary mb-4 lg:mb-6 flex items-center gap-2">
-                        <span>📋</span> 兌換記錄
+                    <h2 class="text-xl lg:text-2xl font-bold text-brand-primary mb-4 lg:mb-6">
+                        兌換記錄
                     </h2>
                     <div class="bg-white rounded-xl lg:rounded-2xl p-5 lg:p-6 shadow-md border border-brand-light/50">
                         <div id="redeemHistory" class="space-y-3">
                             <div class="text-center py-8 text-gray-400">
-                                <span class="text-4xl mb-3 block">📭</span>
                                 <p class="text-sm">尚無兌換記錄</p>
                                 <p class="text-xs mt-1">達到等級門檻後即可兌換獎勵</p>
                             </div>
@@ -880,8 +864,8 @@
                 <!-- 注意事項 -->
                 <section class="mb-8 lg:mb-10">
                     <div class="bg-brand-pale rounded-xl lg:rounded-2xl p-5 lg:p-6 border border-brand-light">
-                        <h3 class="font-bold text-gray-800 mb-3 flex items-center gap-2">
-                            <span>⚠️</span> 兌換注意事項
+                        <h3 class="font-bold text-gray-800 mb-3">
+                            兌換注意事項
                         </h3>
                         <ul class="text-sm text-gray-600 space-y-2">
                             <li class="flex items-start gap-2">
@@ -907,49 +891,48 @@
 
         </main>
 
-        <footer class="bg-primary-gradient text-gray-800 rounded-t-[2rem] lg:rounded-t-[3rem] p-8 lg:p-10 mt-10 lg:mt-12 relative overflow-hidden">
-            <!-- 裝飾性背景 -->
-            <div class="absolute top-0 left-0 w-full h-full">
-                <div class="absolute top-0 left-0 w-full h-full opacity-5" style="background-image: radial-gradient(#fff 1.5px, transparent 1.5px); background-size: 20px 20px;"></div>
-                <div class="absolute top-20 right-20 w-64 h-64 rounded-full bg-white/5 blur-3xl"></div>
-                <div class="absolute bottom-20 left-20 w-48 h-48 rounded-full bg-white/5 blur-2xl"></div>
-            </div>
-            
-            <div class="relative z-10 max-w-5xl mx-auto">
-                <!-- 電腦版：橫向佈局 -->
-                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8 lg:gap-12 mb-8">
-                    <!-- Logo 和標語 -->
+        <footer class="bg-gray-50 border-t border-gray-200 py-10 lg:py-12 mt-10 lg:mt-12">
+            <div class="max-w-5xl mx-auto px-4">
+                <!-- 主要內容 -->
+                <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-8 lg:gap-12 mb-8">
+                    <!-- Logo 和品牌資訊 -->
                     <div class="text-center lg:text-left">
-                        <img src="assets/logo-zh-en/basic-combo.png" alt="鮮乳坊 Better Milk" class="h-12 lg:h-14 mx-auto lg:mx-0 mb-4 drop-shadow-lg">
-                        <h3 class="font-display text-lg lg:text-xl font-bold mb-2 tracking-wide text-gray-800">
-                            堅持好農品質，值得您放心品鑑
-                        </h3>
-                        <p class="text-gray-600 font-medium tracking-wider text-sm">
+                        <img src="assets/logo-zh-en/basic-combo.png" alt="鮮乳坊 Better Milk" class="h-10 lg:h-12 mx-auto lg:mx-0 mb-3">
+                        <p class="text-gray-500 text-sm">
                             單一乳源 ・ 獸醫把關 ・ 優於國家標準
                         </p>
                     </div>
                     
-                    <!-- QR Code 區塊 -->
-                    <div class="flex justify-center gap-6 lg:gap-8">
-                        <div class="flex flex-col items-center group">
-                            <div class="w-24 h-24 lg:w-28 lg:h-28 bg-white rounded-2xl mb-3 flex items-center justify-center p-2 overflow-hidden shadow-xl transition-all duration-500 group-hover:scale-105">
-                                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.bettermilk.com.tw/&color=F3A69D" alt="官網 QR Code" class="w-full h-full object-contain">
-                            </div>
-                            <p class="text-xs font-bold text-gray-700">官方網站</p>
+                    <!-- 聯絡資訊 -->
+                    <div class="text-center lg:text-left">
+                        <h4 class="font-bold text-gray-800 mb-3">聯絡我們</h4>
+                        <div class="space-y-2 text-sm text-gray-600">
+                            <p>客服專線：02-2908-2961</p>
+                            <p>服務時間：平日 09:00-18:00</p>
+                            <p>信箱：service@bettermilk.com.tw</p>
                         </div>
-                        <div class="flex flex-col items-center group">
-                            <div class="w-24 h-24 lg:w-28 lg:h-28 bg-white rounded-2xl mb-3 flex items-center justify-center p-2 overflow-hidden shadow-xl transition-all duration-500 group-hover:scale-105">
-                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://page.line.me/bettermilk&color=06C755" alt="LINE 官方帳號 QR Code" class="w-full h-full object-contain">
-                            </div>
-                            <p class="text-xs font-bold text-gray-700">LINE 官方帳號</p>
+                    </div>
+                    
+                    <!-- 快速連結 -->
+                    <div class="text-center lg:text-left">
+                        <h4 class="font-bold text-gray-800 mb-3">快速連結</h4>
+                        <div class="flex flex-col sm:flex-row lg:flex-col gap-2">
+                            <a href="https://www.bettermilk.com.tw/" target="_blank" class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-700 hover:bg-gray-100 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                                官方網站
+                            </a>
+                            <a href="https://page.line.me/bettermilk" target="_blank" class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-[#06C755] rounded-lg text-sm text-white hover:bg-[#05a847] transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.349 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+                                LINE 官方帳號
+                            </a>
                         </div>
                     </div>
                 </div>
                 
                 <!-- 版權資訊 -->
-                <div class="text-center text-xs lg:text-sm text-gray-600 border-t border-gray-300/50 pt-6">
+                <div class="text-center text-xs text-gray-500 border-t border-gray-200 pt-6">
                     <p class="mb-1">&copy; 2025 鮮乳坊 Better Milk. All Rights Reserved.</p>
-                    <p class="text-xs text-gray-500">詳細活動規則與鮮奶金使用效期，請以鮮乳坊 LINE 官方帳號公告為準。</p>
+                    <p>詳細活動規則與鮮奶金使用效期，請以鮮乳坊 LINE 官方帳號公告為準。</p>
                 </div>
             </div>
         </footer>
@@ -1033,14 +1016,10 @@
             
             // Avoid re-rendering headers if they exist
             if (theadRow.children.length <= 1) {
-                tableProducts.forEach((productName, index) => {
+                tableProducts.forEach((productName) => {
                     const th = document.createElement('th');
-                    th.className = "px-4 py-3 whitespace-nowrap min-w-[100px] text-center border-l border-white/20 leading-tight";
-                    th.innerHTML = `
-                        <div class="flex flex-col items-center justify-center gap-1">
-                            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-white/20 text-xs font-bold mb-1">${index + 1}</span>
-                            <span class="font-bold text-[13px]">${productName}</span>
-                        </div>`;
+                    th.className = "px-3 py-3 whitespace-nowrap min-w-[80px] text-center font-semibold text-xs border-l border-gray-200";
+                    th.textContent = productName;
                     theadRow.appendChild(th);
                 });
             }
@@ -1051,37 +1030,28 @@
 
             if (filteredData.length === 0) {
                 const tr = document.createElement('tr');
-                tr.innerHTML = `<td colspan="${tableProducts.length + 1}" class="px-6 py-12 text-center text-brand-primary/60 bg-brand-pale/20">找不到符合「${filterText}」的通路</td>`;
+                tr.innerHTML = `<td colspan="${tableProducts.length + 1}" class="px-6 py-12 text-center text-gray-400">找不到符合「${filterText}」的通路</td>`;
                 tbody.appendChild(tr);
                 return;
             }
 
             filteredData.forEach((channel, idx) => {
                 const tr = document.createElement('tr');
-                const isEven = idx % 2 === 0;
-                tr.className = `border-b border-brand-light transition-colors hover:bg-brand-pale group ${isEven ? 'bg-white' : 'bg-brand-pale'}`;
+                tr.className = `border-b border-gray-100 hover:bg-gray-50 transition-colors`;
                 
                 const th = document.createElement('th');
                 th.scope = "row";
-                th.className = `sticky left-0 z-10 px-4 py-4 font-bold text-gray-800 whitespace-nowrap sticky-shadow transition-colors border-r border-brand-light ${isEven ? 'bg-white group-hover:bg-brand-pale' : 'bg-brand-pale group-hover:bg-brand-pale'}`;
+                th.className = `sticky left-0 z-10 px-4 py-3 font-medium text-gray-800 whitespace-nowrap bg-white border-r border-gray-200 text-left`;
                 th.textContent = channel.name;
                 tr.appendChild(th);
 
                 channel.data.forEach(available => {
                     const td = document.createElement('td');
-                    td.className = "px-4 py-3 text-center border-l border-brand-light/50";
+                    td.className = "px-3 py-3 text-center border-l border-gray-100";
                     if (available === 1) {
-                        td.innerHTML = `
-                            <div class="flex justify-center items-center">
-                                <span class="inline-flex items-center justify-center w-6 h-6 bg-brand-primary text-white rounded-full shadow-sm">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                                </span>
-                            </div>`;
+                        td.innerHTML = `<span class="inline-block w-2 h-2 bg-brand-primary rounded-full"></span>`;
                     } else {
-                         td.innerHTML = `
-                            <div class="flex justify-center items-center">
-                                <span class="w-1.5 h-1.5 rounded-full bg-brand-light/50"></span>
-                            </div>`;
+                        td.innerHTML = `<span class="text-gray-300">-</span>`;
                     }
                     tr.appendChild(td);
                 });
@@ -1204,11 +1174,11 @@
         
         // 等級配置
         const levelConfig = [
-            { points: 0, name: '尚未開始', icon: '🥛' },
-            { points: 3, name: '初級品鑑家', icon: '🌱' },
-            { points: 7, name: '進階品鑑家', icon: '🌿' },
-            { points: 12, name: '莊園探索家', icon: '🌳' },
-            { points: 16, name: '頂級鑑賞大使', icon: '👑' }
+            { points: 0, name: '尚未開始', icon: '' },
+            { points: 3, name: '初級品鑑家', icon: 'Lv.1' },
+            { points: 7, name: '進階品鑑家', icon: 'Lv.2' },
+            { points: 12, name: '莊園探索家', icon: 'Lv.3' },
+            { points: 16, name: '頂級鑑賞大使', icon: 'MAX' }
         ];
         
         // 儲存兌換記錄
@@ -1268,7 +1238,7 @@
                 nextLevelCount.textContent = remaining;
                 nextLevelCard.style.display = 'block';
             } else {
-                nextLevelText.textContent = '🎉 恭喜！您已達到最高等級！';
+                nextLevelText.textContent = '恭喜！您已達到最高等級！';
                 nextLevelCount.textContent = '✓';
                 nextLevelCard.classList.add('bg-gradient-to-r', 'from-yellow-50', 'to-white', 'border-yellow-300');
             }
@@ -1348,7 +1318,6 @@
             const toast = document.createElement('div');
             toast.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-4 rounded-xl shadow-2xl z-50 flex items-center gap-3 animate-[slideUp_0.3s_ease-out]';
             toast.innerHTML = `
-                <span class="text-2xl">🎉</span>
                 <div>
                     <p class="font-bold">兌換成功！</p>
                     <p class="text-sm opacity-90">已成功兌換「${levelName}」獎勵</p>
@@ -1371,7 +1340,6 @@
             if (redeemHistory.length === 0) {
                 container.innerHTML = `
                     <div class="text-center py-8 text-gray-400">
-                        <span class="text-4xl mb-3 block">📭</span>
                         <p class="text-sm">尚無兌換記錄</p>
                         <p class="text-xs mt-1">達到等級門檻後即可兌換獎勵</p>
                     </div>
